@@ -1,3 +1,15 @@
+<header class="layout-header">
+  <h1>{{ 'COMMON.WELCOME' | translate }}</h1>
+  <div class="language-switcher">
+    <button type="button" (click)="switchLanguage('en')">EN</button>
+    <button type="button" (click)="switchLanguage('ar')">AR</button>
+  </div>
+</header>
+
+<main class="layout-main">
+  <router-outlet />
+</main>
+
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
 <!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
@@ -339,4 +351,3 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 
-<router-outlet />
