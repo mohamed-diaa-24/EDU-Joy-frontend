@@ -16,34 +16,37 @@
       >
         {{ 'NAV.DASHBOARD' | translate }}
       </a>
-      <a
-        routerLink="/auth/login"
-        routerLinkActive="bg-emerald-500 text-white"
-        class="rounded-2xl bg-emerald-50 px-4 py-2 text-sm font-bold text-emerald-700 shadow-lg transition-all hover:scale-105"
-      >
-        {{ 'NAV.LOGIN' | translate }}
-      </a>
-      <a
-        routerLink="/auth/register"
-        routerLinkActive="bg-amber-500 text-white"
-        class="rounded-2xl bg-amber-50 px-4 py-2 text-sm font-bold text-amber-700 shadow-lg transition-all hover:scale-105"
-      >
-        {{ 'NAV.REGISTER' | translate }}
-      </a>
-      <a
-        routerLink="/auth/child-login"
-        routerLinkActive="bg-violet-500 text-white"
-        class="rounded-2xl bg-violet-50 px-4 py-2 text-sm font-bold text-violet-700 shadow-lg transition-all hover:scale-105"
-      >
-        {{ 'NAV.CHILD_LOGIN' | translate }}
-      </a>
-      <a
-        routerLink="/profile"
-        routerLinkActive="bg-indigo-500 text-white"
-        class="rounded-2xl bg-indigo-50 px-4 py-2 text-sm font-bold text-indigo-700 shadow-lg transition-all hover:scale-105"
-      >
-        {{ 'NAV.PROFILE' | translate }}
-      </a>
+      @if (!isAuthenticated()) {
+        <a
+          routerLink="/auth/login"
+          routerLinkActive="bg-emerald-500 text-white"
+          class="rounded-2xl bg-emerald-50 px-4 py-2 text-sm font-bold text-emerald-700 shadow-lg transition-all hover:scale-105"
+        >
+          {{ 'NAV.LOGIN' | translate }}
+        </a>
+        <a
+          routerLink="/auth/register"
+          routerLinkActive="bg-amber-500 text-white"
+          class="rounded-2xl bg-amber-50 px-4 py-2 text-sm font-bold text-amber-700 shadow-lg transition-all hover:scale-105"
+        >
+          {{ 'NAV.REGISTER' | translate }}
+        </a>
+        <a
+          routerLink="/auth/child-login"
+          routerLinkActive="bg-violet-500 text-white"
+          class="rounded-2xl bg-violet-50 px-4 py-2 text-sm font-bold text-violet-700 shadow-lg transition-all hover:scale-105"
+        >
+          {{ 'NAV.CHILD_LOGIN' | translate }}
+        </a>
+      } @else {
+        <a
+          routerLink="/profile"
+          routerLinkActive="bg-indigo-500 text-white"
+          class="rounded-2xl bg-indigo-50 px-4 py-2 text-sm font-bold text-indigo-700 shadow-lg transition-all hover:scale-105"
+        >
+          {{ 'NAV.PROFILE' | translate }}
+        </a>
+      }
     </nav>
 
     <div class="flex items-center gap-2">
