@@ -1,0 +1,84 @@
+<section class="px-2 py-4 sm:px-4 sm:py-6">
+  <div class="mx-auto max-w-6xl space-y-6">
+    <article
+      class="rounded-3xl bg-white p-6 shadow-lg transition-all hover:scale-[1.01] sm:p-8"
+    >
+      <span
+        class="inline-flex items-center rounded-2xl bg-emerald-100 px-4 py-2 text-sm font-bold text-emerald-700"
+      >
+        {{ 'LANDING.HERO.BADGE' | translate }}
+      </span>
+
+      <h1 class="mt-4 text-start text-3xl font-black text-sky-700 sm:text-5xl">
+        {{ 'LANDING.HERO.TITLE' | translate }}
+      </h1>
+      <p class="mt-3 max-w-3xl text-start text-lg text-slate-600">
+        {{ 'LANDING.HERO.SUBTITLE' | translate }}
+      </p>
+
+      <div class="mt-6 flex flex-wrap items-center gap-3">
+        <a
+          routerLink="/auth/register"
+          class="rounded-2xl bg-sky-500 px-6 py-3 text-base font-bold text-white shadow-lg transition-all hover:scale-105 hover:bg-sky-600"
+        >
+          {{ 'LANDING.HERO.CTA_PRIMARY' | translate }}
+        </a>
+        <a
+          routerLink="/auth/child-login"
+          class="rounded-2xl bg-amber-400 px-6 py-3 text-base font-bold text-amber-900 shadow-lg transition-all hover:scale-105 hover:bg-amber-300"
+        >
+          {{ 'LANDING.HERO.CTA_SECONDARY' | translate }}
+        </a>
+      </div>
+    </article>
+
+    <section class="grid gap-4 md:grid-cols-3">
+      <article class="rounded-3xl bg-sky-50 p-5 shadow-lg transition-all hover:scale-105">
+        <h2 class="text-start text-xl font-extrabold text-sky-700">
+          {{ 'LANDING.FEATURES.LEARN_PLAY.TITLE' | translate }}
+        </h2>
+        <p class="mt-2 text-start text-slate-600">
+          {{ 'LANDING.FEATURES.LEARN_PLAY.DESC' | translate }}
+        </p>
+      </article>
+
+      <article class="rounded-3xl bg-amber-50 p-5 shadow-lg transition-all hover:scale-105">
+        <h2 class="text-start text-xl font-extrabold text-amber-700">
+          {{ 'LANDING.FEATURES.SAFE_TRACKING.TITLE' | translate }}
+        </h2>
+        <p class="mt-2 text-start text-slate-600">
+          {{ 'LANDING.FEATURES.SAFE_TRACKING.DESC' | translate }}
+        </p>
+      </article>
+
+      <article class="rounded-3xl bg-emerald-50 p-5 shadow-lg transition-all hover:scale-105">
+        <h2 class="text-start text-xl font-extrabold text-emerald-700">
+          {{ 'LANDING.FEATURES.ARABIC_ENGLISH.TITLE' | translate }}
+        </h2>
+        <p class="mt-2 text-start text-slate-600">
+          {{ 'LANDING.FEATURES.ARABIC_ENGLISH.DESC' | translate }}
+        </p>
+      </article>
+    </section>
+
+    <section class="rounded-3xl bg-white p-6 shadow-lg sm:p-8">
+      <h2 class="text-start text-2xl font-black text-violet-700">
+        {{ 'LANDING.SECTIONS.TITLE' | translate }}
+      </h2>
+      <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="rounded-2xl bg-violet-50 p-4 text-start font-bold text-violet-700 shadow-lg">
+          {{ 'LANDING.SECTIONS.ITEMS.GAMES' | translate }}
+        </div>
+        <div class="rounded-2xl bg-sky-50 p-4 text-start font-bold text-sky-700 shadow-lg">
+          {{ 'LANDING.SECTIONS.ITEMS.STORIES' | translate }}
+        </div>
+        <div class="rounded-2xl bg-emerald-50 p-4 text-start font-bold text-emerald-700 shadow-lg">
+          {{ 'LANDING.SECTIONS.ITEMS.LIVE_CLASSES' | translate }}
+        </div>
+        <div class="rounded-2xl bg-amber-50 p-4 text-start font-bold text-amber-700 shadow-lg">
+          {{ 'LANDING.SECTIONS.ITEMS.PROGRESS' | translate }}
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
