@@ -1,0 +1,90 @@
+<section
+  class="min-h-screen bg-gradient-to-b from-amber-100 via-sky-50 to-emerald-100 px-4 py-8 sm:px-6 md:px-8"
+>
+  <div class="mx-auto max-w-xl">
+    <div class="rounded-3xl bg-white p-6 shadow-lg transition-all hover:scale-105 sm:p-8">
+      <div
+        class="mb-6 inline-flex items-center gap-2 rounded-2xl bg-amber-100 px-4 py-2 text-base font-semibold text-amber-700"
+      >
+        <span class="inline-flex h-3 w-3 rounded-full bg-amber-500"></span>
+        <span>{{ 'AUTH.CHILD_LOGIN.LEARNING_BADGE' | translate }}</span>
+      </div>
+
+      <h1 class="text-start text-3xl font-extrabold tracking-tight text-emerald-700 sm:text-4xl">
+        {{ 'AUTH.CHILD_LOGIN.TITLE' | translate }}
+      </h1>
+      <p class="mt-3 text-start text-lg text-slate-600">
+        {{ 'AUTH.CHILD_LOGIN.SUBTITLE' | translate }}
+      </p>
+
+      <div
+        *ngIf="submitError()"
+        class="mt-6 rounded-2xl border border-rose-200 bg-rose-50 p-4 shadow-lg"
+        role="alert"
+      >
+        <p class="text-start text-sm font-bold text-rose-700">
+          {{ 'AUTH.CHILD_LOGIN.ERROR_TITLE' | translate }}
+        </p>
+        <p class="mt-1 text-start text-sm text-rose-700">{{ submitError() }}</p>
+      </div>
+
+      <form class="mt-6 space-y-5" [formGroup]="childLoginForm" (ngSubmit)="onSubmit()">
+        <div>
+          <label for="code" class="mb-2 block text-start text-base font-semibold text-slate-700">
+            {{ 'AUTH.CHILD_LOGIN.CODE_LABEL' | translate }}
+          </label>
+          <div class="relative">
+            <input
+              id="code"
+              [type]="showCode() ? 'text' : 'password'"
+              formControlName="code"
+              class="w-full rounded-2xl border-2 border-emerald-200 bg-emerald-50 p-4 pe-12 text-center text-2xl font-black tracking-[0.25em] text-slate-800 uppercase outline-none transition-all placeholder:text-slate-400 focus:border-emerald-400 focus:bg-white"
+              [placeholder]="'AUTH.CHILD_LOGIN.CODE_PLACEHOLDER' | translate"
+            />
+            <button
+              type="button"
+              (click)="toggleCodeVisibility()"
+              class="absolute end-3 top-1/2 -translate-y-1/2 rounded-2xl bg-white/80 px-2 py-1 text-xs font-bold text-slate-600 shadow transition-all hover:scale-105"
+            >
+              {{ showCode() ? ('AUTH.COMMON.HIDE' | translate) : ('AUTH.COMMON.SHOW' | translate) }}
+            </button>
+          </div>
+          <p
+            *ngIf="childLoginForm.controls.code.touched && childLoginForm.controls.code.invalid"
+            class="mt-2 text-start text-sm font-medium text-rose-600"
+          >
+            {{
+              childLoginForm.controls.code.hasError('required')
+                ? ('AUTH.CHILD_LOGIN.CODE_REQUIRED' | translate)
+                : ('AUTH.CHILD_LOGIN.CODE_MIN' | translate)
+            }}
+          </p>
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="childLoginForm.invalid || authService.loading()"
+          class="flex w-full items-center justify-center gap-3 rounded-2xl bg-emerald-500 p-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-105 hover:bg-emerald-600 disabled:cursor-not-allowed disabled:opacity-70"
+        >
+          <span
+            *ngIf="authService.loading()"
+            class="h-5 w-5 animate-spin rounded-full border-2 border-white border-e-transparent"
+          ></span>
+          <span>
+            {{
+              authService.loading()
+                ? ('AUTH.CHILD_LOGIN.LOADING' | translate)
+                : ('AUTH.CHILD_LOGIN.SUBMIT' | translate)
+            }}
+          </span>
+        </button>
+      </form>
+
+      <div class="mt-6 rounded-2xl bg-sky-100 p-4 text-center shadow-lg transition-all hover:scale-105">
+        <a routerLink="/auth/login" class="text-base font-bold text-sky-700">
+          {{ 'AUTH.CHILD_LOGIN.PARENT_LINK' | translate }}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

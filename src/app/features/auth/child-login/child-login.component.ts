@@ -9,12 +9,12 @@ import { AuthService } from '../../../core/services/auth.service';
 import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-child-login',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, TranslateModule, RouterLink],
-  templateUrl: './login.component.html',
+  templateUrl: './child-login.component.html',
 })
-export class LoginComponent {
+export class ChildLoginComponent {
   private readonly formBuilder = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
@@ -22,23 +22,24 @@ export class LoginComponent {
   readonly authService = inject(AuthService);
 
   readonly submitError = signal<string | null>(null);
-  readonly showPassword = signal(false);
+  readonly showCode = signal(false);
 
-  readonly loginForm = this.formBuilder.nonNullable.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
+  readonly childLoginForm = this.formBuilder.nonNullable.group({
+    code: ['', [Validators.required, Validators.minLength(4)]],
   });
 
   onSubmit(): void {
-    if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
+    if (this.childLoginForm.invalid) {
+      this.childLoginForm.markAllAsTouched();
       return;
     }
 
+    // Ensure any previous session is cleared before child login.
+    this.authService.logout();
     this.submitError.set(null);
 
     this.authService
-      .login(this.loginForm.getRawValue())
+      .childLogin({ code: this.childLoginForm.controls.code.value.trim() })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (response) => {
@@ -47,19 +48,8 @@ export class LoginComponent {
             return;
           }
 
-          this.authService
-            .getProfile()
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe({
-              next: () => {
-                this.notificationService.show('NOTIFICATIONS.LOGIN_SUCCESS', 'success');
-                this.router.navigate(['/home']);
-              },
-              error: () => {
-                this.notificationService.show('NOTIFICATIONS.LOGIN_SUCCESS', 'success');
-                this.router.navigate(['/home']);
-              },
-            });
+          this.notificationService.show('NOTIFICATIONS.LOGIN_SUCCESS', 'success');
+          this.router.navigate(['/home']);
         },
         error: () => {
           this.submitError.set(this.authService.error());
@@ -67,7 +57,7 @@ export class LoginComponent {
       });
   }
 
-  togglePasswordVisibility(): void {
-    this.showPassword.update((value) => !value);
+  toggleCodeVisibility(): void {
+    this.showCode.update((value) => !value);
   }
 }
