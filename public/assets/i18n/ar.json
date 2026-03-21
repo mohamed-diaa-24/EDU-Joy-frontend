@@ -1,6 +1,140 @@
 {
+  "NOTIFICATIONS": {
+    "LOGIN_SUCCESS": "أهلاً بعودتك! تم تسجيل الدخول بنجاح."
+  },
+  "NAV": {
+    "BRAND": "إديو جوي",
+    "DASHBOARD": "الرئيسية",
+    "LOGIN": "تسجيل الدخول",
+    "REGISTER": "إنشاء حساب",
+    "CHILD_LOGIN": "دخول الطفل",
+    "PROFILE": "الملف الشخصي",
+    "LANGUAGE_EN": "EN",
+    "LANGUAGE_AR": "AR",
+    "AUTHENTICATED": "تم تسجيل الدخول",
+    "LOGOUT": "تسجيل الخروج"
+  },
   "COMMON": {
     "WELCOME": "مرحبا",
     "SAVE": "حفظ"
+  },
+  "LANDING": {
+    "HERO": {
+      "BADGE": "رحلة تعلّم ممتعة",
+      "TITLE": "المنصة التعليمية الذكية للأطفال",
+      "SUBTITLE": "تساعد Edu Joy الأطفال على التعلّم من خلال الألعاب والقصص والفصول التفاعلية مع متابعة سهلة لولي الأمر والمعلم.",
+      "CTA_PRIMARY": "إنشاء حساب",
+      "CTA_SECONDARY": "دخول الطفل"
+    },
+    "FEATURES": {
+      "LEARN_PLAY": {
+        "TITLE": "تعلّم باللعب",
+        "DESC": "أنشطة تفاعلية تجعل كل درس ممتعًا وبسيطًا وجاذبًا."
+      },
+      "SAFE_TRACKING": {
+        "TITLE": "متابعة آمنة لولي الأمر",
+        "DESC": "يمكن لولي الأمر متابعة التقدّم ودعم الطفل بثقة."
+      },
+      "ARABIC_ENGLISH": {
+        "TITLE": "عربي وإنجليزي",
+        "DESC": "تجربة ثنائية اللغة بالكامل مع تبديل سلس بين اللغات."
+      }
+    },
+    "SECTIONS": {
+      "TITLE": "ماذا سيكتشف الطفل",
+      "ITEMS": {
+        "GAMES": "ألعاب تعليمية",
+        "STORIES": "قصص تفاعلية",
+        "LIVE_CLASSES": "فصول مباشرة",
+        "PROGRESS": "تقارير التقدّم"
+      }
+    }
+  },
+  "PROFILE": {
+    "BADGE": "حسابك التعليمي",
+    "TITLE": "ملفي الشخصي",
+    "SUBTITLE": "راجع بيانات حسابك وحدّث اسمك بسهولة.",
+    "LOADING_PROFILE": "جاري تحميل الملف الشخصي...",
+    "FULL_NAME_LABEL": "الاسم الكامل",
+    "FULL_NAME_PLACEHOLDER": "أدخل اسمك الكامل",
+    "FULL_NAME_REQUIRED": "الاسم الكامل مطلوب.",
+    "FULL_NAME_MAX": "يجب ألا يتجاوز الاسم الكامل 200 حرف.",
+    "CHILD_NAME_LABEL": "اسم الطفل",
+    "CHILD_NAME_PLACEHOLDER": "أدخل اسم الطفل",
+    "CHILD_NAME_REQUIRED": "اسم الطفل مطلوب.",
+    "CHILD_NAME_MAX": "يجب ألا يتجاوز اسم الطفل 200 حرف.",
+    "EMAIL_LABEL": "البريد الإلكتروني",
+    "ROLE_LABEL": "الدور",
+    "CHILD_ID_LABEL": "رقم الطفل",
+    "PARENT_ID_LABEL": "رقم ولي الأمر",
+    "UPDATE_BUTTON": "تحديث الملف الشخصي",
+    "UPDATING": "جاري تحديث الملف الشخصي...",
+    "ERROR_TITLE": "فشل تحديث الملف الشخصي",
+    "SUCCESS_TITLE": "تم تحديث الملف الشخصي بنجاح"
+  },
+  "AUTH": {
+    "COMMON": {
+      "SHOW": "إظهار",
+      "HIDE": "إخفاء"
+    },
+    "LOGIN": {
+      "TITLE": "تسجيل الدخول",
+      "SUBTITLE": "سجّل الدخول لمتابعة التعلّم.",
+      "LEARNING_BADGE": "جاهز للتعلّم",
+      "EMAIL_LABEL": "البريد الإلكتروني",
+      "EMAIL_PLACEHOLDER": "أدخل بريدك الإلكتروني",
+      "EMAIL_REQUIRED": "البريد الإلكتروني مطلوب.",
+      "EMAIL_INVALID": "يرجى إدخال بريد إلكتروني صالح.",
+      "PASSWORD_LABEL": "كلمة المرور",
+      "PASSWORD_PLACEHOLDER": "أدخل كلمة المرور",
+      "PASSWORD_REQUIRED": "كلمة المرور مطلوبة.",
+      "PASSWORD_MIN": "يجب أن تكون كلمة المرور 6 أحرف على الأقل.",
+      "SUBMIT": "دخول",
+      "LOADING": "جاري تسجيل الدخول...",
+      "ERROR_TITLE": "عذرًا! حدث خطأ ما",
+      "REGISTER_LINK": "هل تحتاج إلى حساب؟ إنشاء حساب",
+      "CHILD_LINK": "دخول الطفل بكود الصف"
+    },
+    "REGISTER": {
+      "TITLE": "إنشاء حسابك",
+      "SUBTITLE": "انضم إلى Edu Joy وابدأ رحلة التعلّم.",
+      "LEARNING_BADGE": "رحلة تعلّم جديدة",
+      "FULL_NAME_LABEL": "الاسم الكامل",
+      "FULL_NAME_PLACEHOLDER": "أدخل اسمك الكامل",
+      "FULL_NAME_REQUIRED": "الاسم الكامل مطلوب.",
+      "FULL_NAME_MIN": "يجب أن يكون الاسم الكامل حرفين على الأقل.",
+      "EMAIL_LABEL": "البريد الإلكتروني",
+      "EMAIL_PLACEHOLDER": "أدخل بريدك الإلكتروني",
+      "EMAIL_REQUIRED": "البريد الإلكتروني مطلوب.",
+      "EMAIL_INVALID": "يرجى إدخال بريد إلكتروني صالح.",
+      "PASSWORD_LABEL": "كلمة المرور",
+      "PASSWORD_PLACEHOLDER": "أنشئ كلمة مرور",
+      "PASSWORD_REQUIRED": "كلمة المرور مطلوبة.",
+      "PASSWORD_MIN": "يجب أن تكون كلمة المرور 6 أحرف على الأقل.",
+      "ROLE_LABEL": "أسجل كـ",
+      "ROLES": {
+        "PARENT": "ولي أمر",
+        "TEACHER": "معلم"
+      },
+      "SUBMIT": "إنشاء الحساب",
+      "LOADING": "جاري إنشاء الحساب...",
+      "ERROR_TITLE": "عذرًا! فشل التسجيل",
+      "SUCCESS_TITLE": "ممتاز! تم إنشاء الحساب",
+      "LOGIN_LINK": "لديك حساب بالفعل؟ سجّل الدخول",
+      "CHILD_LINK": "صفحة دخول الطفل"
+    },
+    "CHILD_LOGIN": {
+      "TITLE": "دخول الطفل",
+      "SUBTITLE": "اكتب كود الصف لمتابعة الدروس الممتعة.",
+      "LEARNING_BADGE": "منطقة المتعلم الصغير",
+      "CODE_LABEL": "كود الصف",
+      "CODE_PLACEHOLDER": "AB12CD",
+      "CODE_REQUIRED": "كود الصف مطلوب.",
+      "CODE_MIN": "كود الصف قصير جدًا.",
+      "SUBMIT": "ابدأ التعلّم",
+      "LOADING": "جارٍ التحقق من الكود...",
+      "ERROR_TITLE": "عذرًا! الكود غير صالح",
+      "PARENT_LINK": "العودة لتسجيل دخول ولي الأمر"
+    }
   }
 }

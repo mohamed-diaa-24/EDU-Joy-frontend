@@ -1,29 +1,5 @@
 :host {
   display: block;
-}
-
-.layout-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.language-switcher {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.layout-main {
-  padding: 1rem;
-}
-
-/* Keep layout direction-aware for navbar/sidebar wrappers */
-:host-context([dir='rtl']) .layout-header {
-  direction: rtl;
-}
-
-:host-context([dir='ltr']) .layout-header {
-  direction: ltr;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f0f9ff 0%, #fffbeb 55%, #ecfdf5 100%);
 }

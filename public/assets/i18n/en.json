@@ -1,6 +1,140 @@
 {
+  "NOTIFICATIONS": {
+    "LOGIN_SUCCESS": "Welcome back! You are now signed in."
+  },
+  "NAV": {
+    "BRAND": "Edu Joy",
+    "DASHBOARD": "Home",
+    "LOGIN": "Login",
+    "REGISTER": "Register",
+    "CHILD_LOGIN": "Child Login",
+    "PROFILE": "Profile",
+    "LANGUAGE_EN": "EN",
+    "LANGUAGE_AR": "AR",
+    "AUTHENTICATED": "Signed in",
+    "LOGOUT": "Logout"
+  },
   "COMMON": {
     "WELCOME": "Welcome",
     "SAVE": "Save"
+  },
+  "LANDING": {
+    "HERO": {
+      "BADGE": "A joyful learning journey",
+      "TITLE": "The smart educational platform for kids",
+      "SUBTITLE": "Edu Joy helps children learn through games, stories, interactive classes, and friendly progress tracking for parents and teachers.",
+      "CTA_PRIMARY": "Create account",
+      "CTA_SECONDARY": "Child login"
+    },
+    "FEATURES": {
+      "LEARN_PLAY": {
+        "TITLE": "Learn by playing",
+        "DESC": "Interactive activities keep every lesson fun, simple, and engaging."
+      },
+      "SAFE_TRACKING": {
+        "TITLE": "Safe parent tracking",
+        "DESC": "Parents can monitor progress and support children with confidence."
+      },
+      "ARABIC_ENGLISH": {
+        "TITLE": "Arabic & English",
+        "DESC": "A fully bilingual experience with smooth language switching."
+      }
+    },
+    "SECTIONS": {
+      "TITLE": "What children will explore",
+      "ITEMS": {
+        "GAMES": "Learning Games",
+        "STORIES": "Interactive Stories",
+        "LIVE_CLASSES": "Live Classes",
+        "PROGRESS": "Progress Reports"
+      }
+    }
+  },
+  "PROFILE": {
+    "BADGE": "Your learning account",
+    "TITLE": "My Profile",
+    "SUBTITLE": "Review your account details and keep your name up to date.",
+    "LOADING_PROFILE": "Loading profile...",
+    "FULL_NAME_LABEL": "Full name",
+    "FULL_NAME_PLACEHOLDER": "Enter your full name",
+    "FULL_NAME_REQUIRED": "Full name is required.",
+    "FULL_NAME_MAX": "Full name must be 200 characters or fewer.",
+    "CHILD_NAME_LABEL": "Child name",
+    "CHILD_NAME_PLACEHOLDER": "Enter child name",
+    "CHILD_NAME_REQUIRED": "Child name is required.",
+    "CHILD_NAME_MAX": "Child name must be 200 characters or fewer.",
+    "EMAIL_LABEL": "Email",
+    "ROLE_LABEL": "Role",
+    "CHILD_ID_LABEL": "Child ID",
+    "PARENT_ID_LABEL": "Parent ID",
+    "UPDATE_BUTTON": "Update profile",
+    "UPDATING": "Updating profile...",
+    "ERROR_TITLE": "Profile update failed",
+    "SUCCESS_TITLE": "Profile updated successfully"
+  },
+  "AUTH": {
+    "COMMON": {
+      "SHOW": "Show",
+      "HIDE": "Hide"
+    },
+    "LOGIN": {
+      "TITLE": "Login",
+      "SUBTITLE": "Sign in to continue learning.",
+      "LEARNING_BADGE": "Ready to Learn",
+      "EMAIL_LABEL": "Email",
+      "EMAIL_PLACEHOLDER": "Enter your email address",
+      "EMAIL_REQUIRED": "Email is required.",
+      "EMAIL_INVALID": "Please enter a valid email address.",
+      "PASSWORD_LABEL": "Password",
+      "PASSWORD_PLACEHOLDER": "Enter your password",
+      "PASSWORD_REQUIRED": "Password is required.",
+      "PASSWORD_MIN": "Password must be at least 6 characters.",
+      "SUBMIT": "Sign in",
+      "LOADING": "Signing in...",
+      "ERROR_TITLE": "Oops! Something went wrong",
+      "REGISTER_LINK": "Need an account? Register",
+      "CHILD_LINK": "Kid login with class code"
+    },
+    "REGISTER": {
+      "TITLE": "Create your account",
+      "SUBTITLE": "Join Edu Joy and start your learning adventure.",
+      "LEARNING_BADGE": "New Learning Journey",
+      "FULL_NAME_LABEL": "Full name",
+      "FULL_NAME_PLACEHOLDER": "Enter your full name",
+      "FULL_NAME_REQUIRED": "Full name is required.",
+      "FULL_NAME_MIN": "Full name must be at least 2 characters.",
+      "EMAIL_LABEL": "Email",
+      "EMAIL_PLACEHOLDER": "Enter your email address",
+      "EMAIL_REQUIRED": "Email is required.",
+      "EMAIL_INVALID": "Please enter a valid email address.",
+      "PASSWORD_LABEL": "Password",
+      "PASSWORD_PLACEHOLDER": "Create a password",
+      "PASSWORD_REQUIRED": "Password is required.",
+      "PASSWORD_MIN": "Password must be at least 6 characters.",
+      "ROLE_LABEL": "I am signing up as",
+      "ROLES": {
+        "PARENT": "Parent",
+        "TEACHER": "Teacher"
+      },
+      "SUBMIT": "Create account",
+      "LOADING": "Creating account...",
+      "ERROR_TITLE": "Oops! Registration failed",
+      "SUCCESS_TITLE": "Great! Account created",
+      "LOGIN_LINK": "Already have an account? Sign in",
+      "CHILD_LINK": "Child login page"
+    },
+    "CHILD_LOGIN": {
+      "TITLE": "Child Login",
+      "SUBTITLE": "Type your class code to continue your fun lessons.",
+      "LEARNING_BADGE": "Little Learner Zone",
+      "CODE_LABEL": "Class Code",
+      "CODE_PLACEHOLDER": "AB12CD",
+      "CODE_REQUIRED": "Class code is required.",
+      "CODE_MIN": "Class code is too short.",
+      "SUBMIT": "Start learning",
+      "LOADING": "Checking code...",
+      "ERROR_TITLE": "Oops! Invalid code",
+      "PARENT_LINK": "Back to parent login"
+    }
   }
 }
