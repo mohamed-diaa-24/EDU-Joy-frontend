@@ -1,0 +1,133 @@
+<section class="px-2 py-4 sm:px-4 sm:py-6">
+  <div class="mx-auto max-w-3xl">
+    <article class="rounded-3xl bg-white p-6 shadow-lg transition-all hover:scale-[1.01] sm:p-8">
+      <div
+        class="mb-5 inline-flex items-center gap-2 rounded-2xl bg-violet-100 px-4 py-2 text-sm font-bold text-violet-700"
+      >
+        <span class="inline-flex h-3 w-3 rounded-full bg-violet-500"></span>
+        <span>{{ 'PROFILE.BADGE' | translate }}</span>
+      </div>
+
+      <h1 class="text-start text-3xl font-black text-sky-700 sm:text-4xl">
+        {{ 'PROFILE.TITLE' | translate }}
+      </h1>
+      <p class="mt-2 text-start text-slate-600">
+        {{ 'PROFILE.SUBTITLE' | translate }}
+      </p>
+
+      <div
+        *ngIf="submitError()"
+        class="mt-5 rounded-2xl border border-rose-200 bg-rose-50 p-4 shadow-lg"
+        role="alert"
+      >
+        <p class="text-start text-sm font-bold text-rose-700">
+          {{ 'PROFILE.ERROR_TITLE' | translate }}
+        </p>
+        <p class="mt-1 text-start text-sm text-rose-700">{{ submitError() }}</p>
+      </div>
+
+      <div
+        *ngIf="submitSuccess()"
+        class="mt-5 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 shadow-lg"
+      >
+        <p class="text-start text-sm font-bold text-emerald-700">
+          {{ 'PROFILE.SUCCESS_TITLE' | translate }}
+        </p>
+        <p class="mt-1 text-start text-sm text-emerald-700">{{ submitSuccess() }}</p>
+      </div>
+
+      <div *ngIf="loadingProfile()" class="mt-6 flex items-center gap-3">
+        <span
+          class="h-5 w-5 animate-spin rounded-full border-2 border-sky-500 border-e-transparent"
+        ></span>
+        <span class="text-sm font-semibold text-sky-700">
+          {{ 'PROFILE.LOADING_PROFILE' | translate }}
+        </span>
+      </div>
+
+      <form
+        *ngIf="!loadingProfile()"
+        class="mt-6 space-y-5"
+        [formGroup]="profileForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <div>
+          <label
+            for="fullName"
+            class="mb-2 block text-start text-base font-semibold text-slate-700"
+          >
+            {{ (isChild() ? 'PROFILE.CHILD_NAME_LABEL' : 'PROFILE.FULL_NAME_LABEL') | translate }}
+          </label>
+          <input
+            id="fullName"
+            type="text"
+            formControlName="fullName"
+            [placeholder]="
+              (isChild() ? 'PROFILE.CHILD_NAME_PLACEHOLDER' : 'PROFILE.FULL_NAME_PLACEHOLDER') | translate
+            "
+            class="w-full rounded-2xl border-2 border-sky-200 bg-sky-50 p-4 text-base text-slate-800 outline-none transition-all placeholder:text-slate-400 focus:border-sky-400 focus:bg-white"
+          />
+          <p
+            *ngIf="profileForm.controls.fullName.touched && profileForm.controls.fullName.invalid"
+            class="mt-2 text-start text-sm font-medium text-rose-600"
+          >
+            {{
+              profileForm.controls.fullName.hasError('required')
+                ? ((isChild() ? 'PROFILE.CHILD_NAME_REQUIRED' : 'PROFILE.FULL_NAME_REQUIRED') | translate)
+                : ((isChild() ? 'PROFILE.CHILD_NAME_MAX' : 'PROFILE.FULL_NAME_MAX') | translate)
+            }}
+          </p>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div *ngIf="!isChild()" class="rounded-2xl bg-emerald-50 p-4 shadow-lg">
+            <p class="text-start text-xs font-bold text-emerald-700">{{ 'PROFILE.EMAIL_LABEL' | translate }}</p>
+            <p class="mt-1 break-all text-start text-sm font-semibold text-slate-700">
+              {{ authService.currentUser()?.email || '-' }}
+            </p>
+          </div>
+          <div *ngIf="!isChild()" class="rounded-2xl bg-amber-50 p-4 shadow-lg">
+            <p class="text-start text-xs font-bold text-amber-700">{{ 'PROFILE.ROLE_LABEL' | translate }}</p>
+            <p class="mt-1 text-start text-sm font-semibold text-slate-700">
+              {{ authService.currentUser()?.role || '-' }}
+            </p>
+          </div>
+          <div *ngIf="isChild()" class="rounded-2xl bg-emerald-50 p-4 shadow-lg">
+            <p class="text-start text-xs font-bold text-emerald-700">
+              {{ 'PROFILE.CHILD_ID_LABEL' | translate }}
+            </p>
+            <p class="mt-1 text-start text-sm font-semibold text-slate-700">
+              {{ childProfile()?.id || '-' }}
+            </p>
+          </div>
+          <div *ngIf="isChild()" class="rounded-2xl bg-amber-50 p-4 shadow-lg">
+            <p class="text-start text-xs font-bold text-amber-700">
+              {{ 'PROFILE.PARENT_ID_LABEL' | translate }}
+            </p>
+            <p class="mt-1 break-all text-start text-sm font-semibold text-slate-700">
+              {{ childProfile()?.parentId || '-' }}
+            </p>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="profileForm.invalid || authService.loading()"
+          class="flex w-full items-center justify-center gap-3 rounded-2xl bg-sky-500 p-4 text-lg font-bold text-white shadow-lg transition-all hover:scale-105 hover:bg-sky-600 disabled:cursor-not-allowed disabled:opacity-70"
+        >
+          <span
+            *ngIf="authService.loading()"
+            class="h-5 w-5 animate-spin rounded-full border-2 border-white border-e-transparent"
+          ></span>
+          <span>
+            {{
+              authService.loading()
+                ? ('PROFILE.UPDATING' | translate)
+                : ('PROFILE.UPDATE_BUTTON' | translate)
+            }}
+          </span>
+        </button>
+      </form>
+    </article>
+  </div>
+</section>
