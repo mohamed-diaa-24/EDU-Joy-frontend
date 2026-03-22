@@ -6,12 +6,15 @@
     "COURSE_DELETED": "Course removed.",
     "LESSON_CREATED": "Lesson created successfully.",
     "LESSON_UPDATED": "Lesson updated successfully.",
-    "LESSON_DELETED": "Lesson removed."
+    "LESSON_DELETED": "Lesson removed.",
+    "CHILD_ADDED": "Child added successfully!",
+    "COPIED": "Copied to clipboard!"
   },
   "NAV": {
     "BRAND": "Edu Joy",
     "COURSES": "Courses",
     "MY_COURSES": "My Courses",
+    "PARENT_DASHBOARD": "Parent Portal",
     "DASHBOARD": "Home",
     "LOGIN": "Login",
     "REGISTER": "Register",
@@ -257,5 +260,28 @@
     "BACK_TO_MY_COURSES": "Back to My Courses",
     "NO_LESSONS_YET": "No lessons have been added to this course yet.",
     "COURSE_LESSONS": "Course Lessons"
+  },
+  "PARENT": {
+    "DASHBOARD_BADGE": "Parent Portal",
+    "DASHBOARD_TITLE": "Welcome, Parent!",
+    "DASHBOARD_SUBTITLE": "Monitor your children's progress, add new learners, and keep track of their success.",
+    "ADD_CHILD": "Add Child",
+    "MY_CHILDREN": "My Children",
+    "NO_CHILDREN": "No children added yet.",
+    "ADD_CHILD_NOW": "Add your first child",
+    "LOGIN_CODE": "Login Code",
+    "VIEW_PROGRESS": "View Progress",
+    "CHILD_COURSES": "Enrolled Courses",
+    "NO_COURSES": "No courses found for your children.",
+    "EXPLORE_COURSES": "Explore our courses",
+    "ADD_CHILD_DESC": "Create a new learning profile for your child. They'll receive a unique login code.",
+    "FORM_NAME": "Child's Name",
+    "FORM_NAME_PH": "e.g. Ahmed",
+    "PROGRESS_TITLE": "Learning Progress",
+    "LEARNING_STATS": "Learning Statistics",
+    "COMPLETION": "Completion",
+    "LESSONS_DONE": "lessons completed",
+    "RECENT_ACTIVITY": "Recent Activity",
+    "NO_ACTIVITY": "No recent activity found."
   }
 }

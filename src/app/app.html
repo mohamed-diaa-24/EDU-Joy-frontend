@@ -55,6 +55,15 @@
             {{ 'NAV.MY_COURSES' | translate }}
           </a>
         }
+        @if (authService.getCurrentRole()?.toLowerCase() === 'parent') {
+          <a
+            routerLink="/parent-dashboard"
+            routerLinkActive="bg-indigo-500 text-white"
+            class="rounded-2xl bg-indigo-50 px-4 py-2 text-sm font-bold text-indigo-700 shadow-lg transition-all hover:scale-105"
+          >
+            {{ 'NAV.PARENT_DASHBOARD' | translate }}
+          </a>
+        }
         <a
           routerLink="/profile"
           routerLinkActive="bg-indigo-500 text-white"

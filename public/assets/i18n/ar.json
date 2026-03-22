@@ -6,12 +6,15 @@
     "COURSE_DELETED": "تم حذف الكورس.",
     "LESSON_CREATED": "تم إضافة الدرس بنجاح.",
     "LESSON_UPDATED": "تم تعديل الدرس بنجاح.",
-    "LESSON_DELETED": "تم حذف الدرس."
+    "LESSON_DELETED": "تم حذف الدرس.",
+    "CHILD_ADDED": "تم إضافة الطفل بنجاح!",
+    "COPIED": "تم النسخ!"
   },
   "NAV": {
     "BRAND": "إديو جوي",
     "COURSES": "الكورسات",
     "MY_COURSES": "كورساتي",
+    "PARENT_DASHBOARD": "بوابة ولي الأمر",
     "DASHBOARD": "الرئيسية",
     "LOGIN": "تسجيل الدخول",
     "REGISTER": "إنشاء حساب",
@@ -257,5 +260,28 @@
     "BACK_TO_MY_COURSES": "العودة لكورساتي",
     "NO_LESSONS_YET": "لم يتم إضافة دروس لهذا الكورس بعد.",
     "COURSE_LESSONS": "محتوى الكورس"
+  },
+  "PARENT": {
+    "DASHBOARD_BADGE": "بوابة ولي الأمر",
+    "DASHBOARD_TITLE": "أهلاً بك يا ولي الأمر!",
+    "DASHBOARD_SUBTITLE": "تابع تقدم أبنائك، أضف متعلمين جدد، وراقب نجاحهم ببساطة.",
+    "ADD_CHILD": "إضافة طفل",
+    "MY_CHILDREN": "أبنائي",
+    "NO_CHILDREN": "لم يتم إضافة أي أبناء بعد.",
+    "ADD_CHILD_NOW": "أضف طفلك الأول هنا",
+    "LOGIN_CODE": "كود الدخول",
+    "VIEW_PROGRESS": "عرض التقدم",
+    "CHILD_COURSES": "كورسات الأبناء",
+    "NO_COURSES": "لم يتم العثور على أي كورسات لأبنائك.",
+    "EXPLORE_COURSES": "تصفح الكورسات الخاصة بنا",
+    "ADD_CHILD_DESC": "أنشئ حساباً جديداً لطفلك. سيحصل على كود تسجيل دخول خاص به ليدخل إلى مساحته.",
+    "FORM_NAME": "اسم الطفل",
+    "FORM_NAME_PH": "مثال: أحمد",
+    "PROGRESS_TITLE": "مستوى التقدم",
+    "LEARNING_STATS": "إحصائيات التعلم",
+    "COMPLETION": "نسبة الإنجاز",
+    "LESSONS_DONE": "دروس مكتملة",
+    "RECENT_ACTIVITY": "النشاط الأخير",
+    "NO_ACTIVITY": "لا توجد نشاطات مسجلة بعد."
   }
 }

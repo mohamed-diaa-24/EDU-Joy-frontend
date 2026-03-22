@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { teacherGuard } from './core/guards/teacher.guard';
 import { childGuard } from './core/guards/child.guard';
+import { parentGuard } from './core/guards/parent.guard';
 
 export const appRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -24,6 +25,12 @@ export const appRoutes: Routes = [
     path: 'home',
     loadComponent: () =>
       import('./features/home/home.component').then((m) => m.HomeComponent),
+  },
+  {
+    path: 'parent-dashboard',
+    canActivate: [authGuard, parentGuard],
+    loadComponent: () =>
+      import('./features/parent/parent-dashboard/parent-dashboard.component').then((m) => m.ParentDashboardComponent),
   },
   {
     path: 'my-courses',
