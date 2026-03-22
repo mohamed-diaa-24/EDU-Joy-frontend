@@ -78,6 +78,16 @@
                   }
                 </button>
               </div>
+            } @else if (isParent) {
+              <div class="relative mt-4 flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  (click)="openEnrollModal()"
+                  class="rounded-2xl bg-emerald-500/95 px-8 py-2.5 text-sm font-black text-white shadow-lg transition-all hover:scale-105 hover:bg-emerald-400 focus:bg-emerald-600"
+                >
+                  {{ 'COURSES.ENROLL_CHILD' | translate }}
+                </button>
+              </div>
             }
           </div>
         </div>
@@ -173,4 +183,82 @@
     (confirmed)="onDeleteLessonConfirmed()"
     (cancelled)="onDeleteLessonDialogCancelled()"
   />
+
+  <!-- Enroll / Pay Modal -->
+  @if (enrollModalOpen()) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-sm">
+      <div class="w-full max-w-md overflow-hidden rounded-3xl bg-white shadow-2xl p-6 sm:p-8 animate-in fade-in zoom-in-95 duration-200">
+        <h3 class="text-2xl font-black text-slate-800 mb-2">{{ 'COURSES.ENROLL_CHILD' | translate }}</h3>
+        <p class="text-slate-600 mb-6">{{ 'COURSES.SELECT_CHILD_DESC' | translate }}</p>
+
+        @if (enrollError()) {
+          <div class="mb-4 rounded-xl bg-rose-50 p-3 text-sm font-bold text-rose-800 border border-rose-200">
+            {{ enrollError() }}
+          </div>
+        }
+
+        @if (loadingChildren()) {
+          <div class="flex justify-center p-4">
+            <div class="h-8 w-8 animate-spin rounded-full border-4 border-emerald-200 border-t-emerald-600"></div>
+          </div>
+        } @else if (enrollChildren().length === 0) {
+          <div class="text-center py-4 bg-slate-50 rounded-2xl mb-4 border border-dashed border-slate-200">
+            <p class="text-slate-500">{{ 'PARENT.NO_CHILDREN' | translate }}</p>
+            <a routerLink="/parent-dashboard" class="mt-2 text-emerald-600 font-bold hover:underline inline-block">
+              {{ 'PARENT.ADD_CHILD_NOW' | translate }}
+            </a>
+          </div>
+        } @else {
+          <div class="flex flex-col gap-3 mb-6">
+            @for (child of enrollChildren(); track child.id) {
+              <label 
+                class="flex items-center gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all hover:bg-slate-50"
+                [class.border-emerald-500]="selectedChildId() === child.id"
+                [class.bg-emerald-50]="selectedChildId() === child.id"
+                [class.border-slate-100]="selectedChildId() !== child.id"
+                (click)="selectedChildId.set(child.id)"
+              >
+                <div 
+                  class="w-5 h-5 rounded-full border-2 flex items-center justify-center"
+                  [class.border-emerald-500]="selectedChildId() === child.id"
+                  [class.border-slate-300]="selectedChildId() !== child.id"
+                >
+                  @if (selectedChildId() === child.id) {
+                    <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
+                  }
+                </div>
+                <span class="font-bold text-slate-800">{{ child.name }}</span>
+              </label>
+            }
+          </div>
+        }
+
+        <div class="mt-4 flex gap-3">
+          <button
+            type="button"
+            (click)="submitEnrollment()"
+            [disabled]="enrolling() || !selectedChildId()"
+            class="flex-1 rounded-xl bg-emerald-600 px-4 py-3 text-sm font-bold text-white shadow-md hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            @if (enrolling()) {
+              {{ 'COMMON.SAVING' | translate }}
+            } @else {
+              @if (course()?.price! > 0) {
+                {{ 'COURSES.PAY_AND_ENROLL' | translate }}
+              } @else {
+                {{ 'COURSES.ENROLL_NOW' | translate }}
+              }
+            }
+          </button>
+          <button
+            type="button"
+            (click)="closeEnrollModal()"
+            class="flex-1 rounded-xl bg-slate-100 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-200"
+          >
+            {{ 'COMMON.CANCEL' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
 </section>

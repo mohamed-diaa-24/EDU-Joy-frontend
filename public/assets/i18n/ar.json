@@ -8,7 +8,8 @@
     "LESSON_UPDATED": "تم تعديل الدرس بنجاح.",
     "LESSON_DELETED": "تم حذف الدرس.",
     "CHILD_ADDED": "تم إضافة الطفل بنجاح!",
-    "COPIED": "تم النسخ!"
+    "COPIED": "تم النسخ!",
+    "ENROLL_SUCCESS": "تم الاشتراك بنجاح!"
   },
   "NAV": {
     "BRAND": "إديو جوي",
@@ -128,7 +129,11 @@
     "DELETE_MODAL_TITLE": "حذف هذا الكورس؟",
     "DELETE_CONFIRM": "سيتم إزالة الكورس والتسجيلات المرتبطة به. لا يمكن التراجع عن هذا الإجراء.",
     "DELETE_CONFIRM_BTN": "حذف نهائي",
-    "BACK_TO_COURSE": "العودة للكورس"
+    "BACK_TO_COURSE": "العودة للكورس",
+    "ENROLL_CHILD": "تسجيل طفلي",
+    "SELECT_CHILD_DESC": "اختر الطفل الذي تود تسجيله في هذه الرحلة الممتعة.",
+    "PAY_AND_ENROLL": "الدفع والاشتراك",
+    "ENROLL_NOW": "اشترك الآن"
   },
   "PROFILE": {
     "BADGE": "حسابك التعليمي",

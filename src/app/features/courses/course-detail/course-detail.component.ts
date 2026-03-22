@@ -13,11 +13,16 @@ import { CourseService } from '../../../core/services/course.service';
 import { LessonService } from '../../../core/services/lesson.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { ConfirmDialogComponent } from '../../../shared/ui/confirm-dialog/confirm-dialog.component';
+import { ParentService } from '../../../core/services/parent.service';
+import { PaymentService } from '../../../core/services/payment.service';
+import { EnrollmentService } from '../../../core/services/enrollment.service';
+import { ChildDto } from '../../../core/models/parent.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-course-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, TranslateModule, ConfirmDialogComponent],
+  imports: [CommonModule, RouterLink, TranslateModule, ConfirmDialogComponent, FormsModule],
   templateUrl: './course-detail.component.html',
 })
 export class CourseDetailComponent {
@@ -29,6 +34,9 @@ export class CourseDetailComponent {
   private readonly authService = inject(AuthService);
   private readonly notificationService = inject(NotificationService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly parentService = inject(ParentService);
+  private readonly paymentService = inject(PaymentService);
+  private readonly enrollmentService = inject(EnrollmentService);
 
   readonly loading = signal(true);
   readonly error = signal<string | null>(null);
@@ -39,6 +47,14 @@ export class CourseDetailComponent {
   readonly deletingLessonId = signal<number | null>(null);
   readonly deleteLessonDialogOpen = signal(false);
   readonly deletingLesson = signal(false);
+
+  // Enrollment State
+  readonly enrollModalOpen = signal(false);
+  readonly loadingChildren = signal(false);
+  readonly enrollChildren = signal<ChildDto[]>([]);
+  readonly selectedChildId = signal<number | null>(null);
+  readonly enrolling = signal(false);
+  readonly enrollError = signal<string | null>(null);
 
   readonly canManageCourse = computed(() => {
     if (this.authService.getCurrentRole()?.toLowerCase() !== 'teacher') {
@@ -181,5 +197,93 @@ export class CourseDetailComponent {
           this.error.set(api?.errors?.[0] ?? api?.message ?? err.message);
         },
       });
+  }
+
+  // --- Enrollment Flow ---
+  get isParent(): boolean {
+    return this.authService.getCurrentRole()?.toLowerCase() === 'parent';
+  }
+
+  openEnrollModal(): void {
+    if (!this.isParent) return;
+    this.enrollModalOpen.set(true);
+    this.selectedChildId.set(null);
+    this.enrollError.set(null);
+    
+    if (this.enrollChildren().length === 0) {
+      this.loadingChildren.set(true);
+      this.parentService.getChildren()
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: (res) => {
+            this.loadingChildren.set(false);
+            if (res.success && res.data) {
+              this.enrollChildren.set(res.data);
+            }
+          },
+          error: () => this.loadingChildren.set(false)
+        });
+    }
+  }
+
+  closeEnrollModal(): void {
+    this.enrollModalOpen.set(false);
+  }
+
+  submitEnrollment(): void {
+    const cId = this.selectedChildId();
+    const c = this.course();
+    if (!cId || !c) return;
+
+    this.enrolling.set(true);
+    this.enrollError.set(null);
+
+    if (c.price > 0) {
+      // Paid Flow
+      this.paymentService.createPayment({ courseId: c.id })
+        .pipe(
+          switchMap(res => {
+            if (!res.success || !res.data) throw new Error(res.message);
+            // Simulate Payment Gateway then Confirm
+            return this.paymentService.confirmPayment({
+              paymentId: res.data.paymentId,
+              childId: cId
+            });
+          }),
+          takeUntilDestroyed(this.destroyRef)
+        )
+        .subscribe({
+          next: (res) => {
+            this.enrolling.set(false);
+            this.closeEnrollModal();
+            this.notificationService.show('NOTIFICATIONS.ENROLL_SUCCESS', 'success');
+          },
+          error: (err) => {
+            this.enrolling.set(false);
+            const msg = err.error?.message || err.message;
+            this.enrollError.set(msg);
+          }
+        });
+    } else {
+      // Free Flow
+      this.enrollmentService.enroll({ childId: cId, courseId: c.id })
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: (res) => {
+            this.enrolling.set(false);
+            if (!res.success) {
+              this.enrollError.set(res.errors?.[0] ?? res.message);
+              return;
+            }
+            this.closeEnrollModal();
+            this.notificationService.show('NOTIFICATIONS.ENROLL_SUCCESS', 'success');
+          },
+          error: (err: HttpErrorResponse) => {
+            this.enrolling.set(false);
+            const api = err.error as any;
+            this.enrollError.set(api?.errors?.[0] ?? api?.message ?? err.message);
+          }
+        });
+    }
   }
 }

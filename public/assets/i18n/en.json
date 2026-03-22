@@ -8,7 +8,8 @@
     "LESSON_UPDATED": "Lesson updated successfully.",
     "LESSON_DELETED": "Lesson removed.",
     "CHILD_ADDED": "Child added successfully!",
-    "COPIED": "Copied to clipboard!"
+    "COPIED": "Copied to clipboard!",
+    "ENROLL_SUCCESS": "Enrollment completed successfully!"
   },
   "NAV": {
     "BRAND": "Edu Joy",
@@ -128,7 +129,11 @@
     "DELETE_MODAL_TITLE": "Delete this course?",
     "DELETE_CONFIRM": "This will remove the course and related enrollments for your learners. This action cannot be undone.",
     "DELETE_CONFIRM_BTN": "Delete permanently",
-    "BACK_TO_COURSE": "Back to course"
+    "BACK_TO_COURSE": "Back to course",
+    "ENROLL_CHILD": "Enroll Child",
+    "SELECT_CHILD_DESC": "Select which child you want to enroll in this amazing journey.",
+    "PAY_AND_ENROLL": "Pay & Enroll",
+    "ENROLL_NOW": "Enroll Now"
   },
   "PROFILE": {
     "BADGE": "Your learning account",
