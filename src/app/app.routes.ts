@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
+import { teacherGuard } from './core/guards/teacher.guard';
 
 export const appRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -28,6 +29,34 @@ export const appRoutes: Routes = [
     canActivate: [authGuard],
     loadComponent: () =>
       import('./features/profile/profile.component').then((m) => m.ProfileComponent),
+  },
+  {
+    path: 'courses/new',
+    canActivate: [authGuard, teacherGuard],
+    loadComponent: () =>
+      import('./features/courses/course-create/course-create.component').then(
+        (m) => m.CourseCreateComponent,
+      ),
+  },
+  {
+    path: 'courses/:id/edit',
+    canActivate: [authGuard, teacherGuard],
+    loadComponent: () =>
+      import('./features/courses/course-edit/course-edit.component').then((m) => m.CourseEditComponent),
+  },
+  {
+    path: 'courses/:id',
+    loadComponent: () =>
+      import('./features/courses/course-detail/course-detail.component').then(
+        (m) => m.CourseDetailComponent,
+      ),
+  },
+  {
+    path: 'courses',
+    loadComponent: () =>
+      import('./features/courses/course-list/course-list.component').then(
+        (m) => m.CourseListComponent,
+      ),
   },
   { path: '**', redirectTo: 'home' },
 ];

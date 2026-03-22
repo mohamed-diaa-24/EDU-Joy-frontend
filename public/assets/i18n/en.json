@@ -1,9 +1,13 @@
 {
   "NOTIFICATIONS": {
-    "LOGIN_SUCCESS": "Welcome back! You are now signed in."
+    "LOGIN_SUCCESS": "Welcome back! You are now signed in.",
+    "COURSE_CREATED": "Your course was created successfully.",
+    "COURSE_UPDATED": "Course updated successfully.",
+    "COURSE_DELETED": "Course removed."
   },
   "NAV": {
     "BRAND": "Edu Joy",
+    "COURSES": "Courses",
     "DASHBOARD": "Home",
     "LOGIN": "Login",
     "REGISTER": "Register",
@@ -16,7 +20,9 @@
   },
   "COMMON": {
     "WELCOME": "Welcome",
-    "SAVE": "Save"
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "CONFIRM_ACTION": "Confirm"
   },
   "LANDING": {
     "HERO": {
@@ -24,7 +30,8 @@
       "TITLE": "The smart educational platform for kids",
       "SUBTITLE": "Edu Joy helps children learn through games, stories, interactive classes, and friendly progress tracking for parents and teachers.",
       "CTA_PRIMARY": "Create account",
-      "CTA_SECONDARY": "Child login"
+      "CTA_SECONDARY": "Child login",
+      "CTA_COURSES": "Browse courses"
     },
     "FEATURES": {
       "LEARN_PLAY": {
@@ -49,6 +56,72 @@
         "PROGRESS": "Progress Reports"
       }
     }
+  },
+  "COURSES": {
+    "BADGE": "Explore learning paths",
+    "TITLE": "Courses",
+    "SUBTITLE": "Browse engaging lessons for children. Teachers can publish new courses anytime.",
+    "CREATE_CTA": "New course",
+    "CREATE_BADGE": "Teacher studio",
+    "CREATE_TITLE": "Create a course",
+    "CREATE_SUBTITLE": "Add a clear title, a friendly description, and a fair price.",
+    "SEARCH_LABEL": "Search",
+    "SEARCH_PLACEHOLDER": "Search by title or description",
+    "SORT_BY": "Sort by",
+    "SORT_CREATED": "Newest",
+    "SORT_TITLE": "Title",
+    "SORT_PRICE": "Price",
+    "SORT_DIR": "Order",
+    "DIR_DESC": "Descending",
+    "DIR_ASC": "Ascending",
+    "MIN_PRICE": "Min price",
+    "MAX_PRICE": "Max price",
+    "OPTIONAL": "Optional",
+    "APPLY": "Apply",
+    "CLEAR": "Reset",
+    "EMPTY": "No courses match your filters yet.",
+    "FREE": "Free",
+    "VIEW": "View",
+    "PREV": "Previous",
+    "NEXT": "Next",
+    "PAGINATION": "Course pages",
+    "BACK_TO_LIST": "All courses",
+    "DETAIL_BADGE": "Course",
+    "ABOUT": "About this course",
+    "LESSONS": "Lessons",
+    "NO_LESSONS": "Lessons will appear here once the teacher adds them.",
+    "INVALID_ID": "This course link is not valid.",
+    "FORM_TITLE": "Course title",
+    "FORM_TITLE_PH": "e.g. Fun Arabic letters",
+    "FORM_DESC": "Description",
+    "FORM_DESC_PH": "What will children learn? Keep it warm and clear.",
+    "FORM_IMAGE_FILE": "Cover image (upload)",
+    "FORM_IMAGE_PH": "Select an image file...",
+    "FORM_IMAGE_FILE_HINT": "Upload an image file from your device. Leave empty for a colorful default banner.",
+    "IMAGE_URL_INVALID": "Enter a valid http(s) image URL, or leave this field empty.",
+    "FORM_PRICE": "Price",
+    "PRICE_HINT": "Use 0 for a free course.",
+    "TITLE_REQUIRED": "Title is required.",
+    "TITLE_MIN": "Title should be at least 2 characters.",
+    "DESC_REQUIRED": "Description is required.",
+    "DESC_MIN": "Description should be at least 10 characters.",
+    "PRICE_REQUIRED": "Price is required.",
+    "PRICE_MIN": "Price cannot be negative.",
+    "SUBMIT": "Publish course",
+    "CREATING": "Publishing…",
+    "CANCEL": "Cancel",
+    "EDIT_CTA": "Edit",
+    "EDIT_BADGE": "Update your course",
+    "EDIT_TITLE": "Edit course",
+    "EDIT_SUBTITLE": "Refresh the title, description, or price — learners will see changes right away.",
+    "SAVE_CHANGES": "Save changes",
+    "SAVING": "Saving…",
+    "DELETE": "Delete",
+    "DELETING": "Deleting…",
+    "DELETE_MODAL_TITLE": "Delete this course?",
+    "DELETE_CONFIRM": "This will remove the course and related enrollments for your learners. This action cannot be undone.",
+    "DELETE_CONFIRM_BTN": "Delete permanently",
+    "BACK_TO_COURSE": "Back to course"
   },
   "PROFILE": {
     "BADGE": "Your learning account",

@@ -184,6 +184,30 @@ export class AuthService {
     return typeof role === 'string' ? role : null;
   }
 
+  /** ASP.NET Identity user id (`nameidentifier`) or JWT `sub`. */
+  getCurrentUserId(): string | null {
+    const token = this.getAccessToken();
+    if (!token) {
+      return null;
+    }
+
+    const payload = this.parseJwtPayload(token);
+    if (!payload) {
+      return null;
+    }
+
+    const nameId =
+      payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+    const sub = payload['sub'];
+    if (typeof nameId === 'string' && nameId.trim()) {
+      return nameId;
+    }
+    if (typeof sub === 'string' && sub.trim()) {
+      return sub;
+    }
+    return null;
+  }
+
   private persistTokens(token: string, refreshToken: string): void {
     localStorage.setItem(AuthService.tokenStorageKey, token);
     localStorage.setItem(AuthService.refreshTokenStorageKey, refreshToken);

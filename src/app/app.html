@@ -16,6 +16,13 @@
       >
         {{ 'NAV.DASHBOARD' | translate }}
       </a>
+      <a
+        routerLink="/courses"
+        routerLinkActive="bg-violet-500 text-white"
+        class="rounded-2xl bg-violet-50 px-4 py-2 text-sm font-bold text-violet-700 shadow-lg transition-all hover:scale-105"
+      >
+        {{ 'NAV.COURSES' | translate }}
+      </a>
       @if (!isAuthenticated()) {
         <a
           routerLink="/auth/login"

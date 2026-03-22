@@ -1,0 +1,265 @@
+<section class="px-2 py-4 sm:px-4 sm:py-6">
+  <div class="mx-auto max-w-6xl space-y-8">
+    <header class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div class="space-y-2 text-start">
+        <span
+          class="inline-flex items-center rounded-2xl bg-violet-100 px-4 py-2 text-sm font-bold text-violet-700"
+        >
+          {{ 'COURSES.BADGE' | translate }}
+        </span>
+        <h1 class="text-3xl font-black text-sky-800 sm:text-4xl">
+          {{ 'COURSES.TITLE' | translate }}
+        </h1>
+        <p class="max-w-2xl text-lg text-slate-600">
+          {{ 'COURSES.SUBTITLE' | translate }}
+        </p>
+      </div>
+      @if (isTeacher()) {
+        <a
+          routerLink="/courses/new"
+          class="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-sky-500 to-violet-500 px-6 py-3 text-base font-bold text-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl"
+        >
+          {{ 'COURSES.CREATE_CTA' | translate }}
+        </a>
+      }
+    </header>
+
+    <form
+      [formGroup]="filterForm"
+      (ngSubmit)="applyFilters()"
+      class="rounded-3xl border border-sky-100 bg-white/90 p-5 shadow-lg backdrop-blur sm:p-6"
+    >
+      <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4 lg:items-end">
+        <label class="block text-start">
+          <span class="mb-1 block text-sm font-bold text-slate-700">
+            {{ 'COURSES.SEARCH_LABEL' | translate }}
+          </span>
+          <input
+            type="search"
+            formControlName="searchTerm"
+            class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-start text-slate-800 shadow-inner outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-200"
+            [placeholder]="'COURSES.SEARCH_PLACEHOLDER' | translate"
+          />
+        </label>
+
+        <label class="block text-start">
+          <span class="mb-1 block text-sm font-bold text-slate-700">
+            {{ 'COURSES.SORT_BY' | translate }}
+          </span>
+          <select
+            formControlName="sortBy"
+            class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-start font-semibold text-slate-800 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-200"
+          >
+            <option value="createdAt">{{ 'COURSES.SORT_CREATED' | translate }}</option>
+            <option value="title">{{ 'COURSES.SORT_TITLE' | translate }}</option>
+            <option value="price">{{ 'COURSES.SORT_PRICE' | translate }}</option>
+          </select>
+        </label>
+
+        <label class="block text-start">
+          <span class="mb-1 block text-sm font-bold text-slate-700">
+            {{ 'COURSES.SORT_DIR' | translate }}
+          </span>
+          <select
+            formControlName="sortDirection"
+            class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-start font-semibold text-slate-800 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-200"
+          >
+            <option value="desc">{{ 'COURSES.DIR_DESC' | translate }}</option>
+            <option value="asc">{{ 'COURSES.DIR_ASC' | translate }}</option>
+          </select>
+        </label>
+
+        <div class="flex flex-wrap gap-2">
+          <button
+            type="submit"
+            class="flex-1 rounded-2xl bg-sky-500 px-4 py-3 text-sm font-bold text-white shadow-lg transition-all hover:bg-sky-600"
+          >
+            {{ 'COURSES.APPLY' | translate }}
+          </button>
+          <button
+            type="button"
+            (click)="clearFilters()"
+            class="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 shadow transition-all hover:bg-slate-50"
+          >
+            {{ 'COURSES.CLEAR' | translate }}
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-4 grid gap-4 sm:grid-cols-2">
+        <label class="block text-start">
+          <span class="mb-1 block text-sm font-bold text-slate-700">
+            {{ 'COURSES.MIN_PRICE' | translate }}
+          </span>
+          <input
+            type="number"
+            min="0"
+            step="0.01"
+            formControlName="minPrice"
+            class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-start text-slate-800 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-200"
+            [placeholder]="'COURSES.OPTIONAL' | translate"
+          />
+        </label>
+        <label class="block text-start">
+          <span class="mb-1 block text-sm font-bold text-slate-700">
+            {{ 'COURSES.MAX_PRICE' | translate }}
+          </span>
+          <input
+            type="number"
+            min="0"
+            step="0.01"
+            formControlName="maxPrice"
+            class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-start text-slate-800 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-200"
+            [placeholder]="'COURSES.OPTIONAL' | translate"
+          />
+        </label>
+      </div>
+    </form>
+
+    @if (loadError()) {
+      <div
+        class="rounded-3xl border border-rose-200 bg-rose-50 p-4 text-start text-sm font-bold text-rose-800 shadow"
+        role="alert"
+      >
+        {{ loadError() }}
+      </div>
+    }
+
+    @if (loading()) {
+      <div class="flex justify-center py-16">
+        <div
+          class="h-12 w-12 animate-spin rounded-full border-4 border-sky-200 border-t-sky-600"
+          aria-hidden="true"
+        ></div>
+      </div>
+    } @else if (!courses().length) {
+      <div
+        class="rounded-3xl border border-dashed border-slate-200 bg-slate-50/80 p-12 text-center shadow-inner"
+      >
+        <p class="text-lg font-bold text-slate-600">{{ 'COURSES.EMPTY' | translate }}</p>
+      </div>
+    } @else {
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        @for (course of courses(); track course.id) {
+          <article
+            class="group flex h-full flex-col overflow-hidden rounded-3xl border border-sky-100 bg-white shadow-lg transition-all hover:-translate-y-1 hover:shadow-2xl"
+          >
+            <div class="relative h-40 overflow-hidden">
+              @if (course.imageUrl) {
+                <img
+                  [src]="course.imageUrl"
+                  [attr.alt]="course.title"
+                  class="absolute inset-0 h-full w-full object-cover"
+                  loading="lazy"
+                  (error)="$any($event.target).style.display = 'none'"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/20 to-transparent"
+                ></div>
+              } @else {
+                <div
+                  class="absolute inset-0 bg-gradient-to-br from-sky-400 via-violet-400 to-amber-300"
+                ></div>
+                <div
+                  class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.35),transparent_50%)]"
+                ></div>
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent"
+                ></div>
+              }
+              <h2
+                class="relative flex h-full items-end p-5 text-start text-xl font-black leading-tight text-white drop-shadow-md"
+              >
+                {{ course.title }}
+              </h2>
+            </div>
+            <div class="flex flex-1 flex-col gap-3 p-5 text-start">
+              <p class="line-clamp-3 flex-1 text-sm leading-relaxed text-slate-600">
+                {{ course.description }}
+              </p>
+              <div class="flex flex-col gap-3 border-t border-slate-100 pt-3">
+                <div class="flex items-center justify-between gap-2">
+                  <span class="text-lg font-black text-emerald-700">
+                    @if (course.price <= 0) {
+                      {{ 'COURSES.FREE' | translate }}
+                    } @else {
+                      {{ course.price | number: '1.2-2' }}
+                    }
+                  </span>
+                  <a
+                    [routerLink]="['/courses', course.id]"
+                    class="rounded-2xl bg-sky-500 px-4 py-2 text-sm font-bold text-white shadow transition-all hover:bg-sky-600"
+                  >
+                    {{ 'COURSES.VIEW' | translate }}
+                  </a>
+                </div>
+                @if (isCourseOwner(course)) {
+                  <div class="flex flex-wrap gap-2">
+                    <a
+                      [routerLink]="['/courses', course.id, 'edit']"
+                      class="rounded-2xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-bold text-amber-900 shadow-sm transition-all hover:bg-amber-100"
+                    >
+                      {{ 'COURSES.EDIT_CTA' | translate }}
+                    </a>
+                    <button
+                      type="button"
+                      (click)="openDeleteDialog(course, $event)"
+                      [disabled]="deletingId() === course.id"
+                      class="rounded-2xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-bold text-rose-800 shadow-sm transition-all hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      @if (deletingId() === course.id) {
+                        {{ 'COURSES.DELETING' | translate }}
+                      } @else {
+                        {{ 'COURSES.DELETE' | translate }}
+                      }
+                    </button>
+                  </div>
+                }
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+
+      @if (totalPages() > 1) {
+        <nav
+          class="flex flex-wrap items-center justify-center gap-2 pt-4"
+          [attr.aria-label]="'COURSES.PAGINATION' | translate"
+        >
+          <button
+            type="button"
+            (click)="goToPage(pageNumber() - 1)"
+            [disabled]="pageNumber() <= 1"
+            class="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow transition-all enabled:hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            {{ 'COURSES.PREV' | translate }}
+          </button>
+          <span class="px-2 text-sm font-bold text-slate-600">
+            {{ pageNumber() }} / {{ totalPages() }}
+            <span class="text-slate-400">({{ totalItems() }})</span>
+          </span>
+          <button
+            type="button"
+            (click)="goToPage(pageNumber() + 1)"
+            [disabled]="pageNumber() >= totalPages()"
+            class="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 shadow transition-all enabled:hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            {{ 'COURSES.NEXT' | translate }}
+          </button>
+        </nav>
+      }
+    }
+  </div>
+
+  <app-confirm-dialog
+    [open]="coursePendingDelete() !== null"
+    [titleKey]="'COURSES.DELETE_MODAL_TITLE'"
+    [messageKey]="'COURSES.DELETE_CONFIRM'"
+    [confirmKey]="'COURSES.DELETE_CONFIRM_BTN'"
+    [cancelKey]="'COMMON.CANCEL'"
+    [loading]="deletingId() !== null"
+    [danger]="true"
+    (confirmed)="executePendingDelete()"
+    (cancelled)="onDeleteDialogCancelled()"
+  />
+</section>
