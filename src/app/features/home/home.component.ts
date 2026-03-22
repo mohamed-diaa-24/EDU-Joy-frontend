@@ -4,9 +4,9 @@ import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-home',
   standalone: true,
   imports: [CommonModule, TranslateModule, RouterLink],
-  templateUrl: './dashboard.component.html',
+  templateUrl: './home.component.html',
 })
-export class DashboardComponent {}
+export class HomeComponent {}

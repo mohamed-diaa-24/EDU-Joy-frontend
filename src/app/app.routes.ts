@@ -21,7 +21,7 @@ export const appRoutes: Routes = [
   {
     path: 'home',
     loadComponent: () =>
-      import('./features/dashboard/dashboard.component').then((m) => m.DashboardComponent),
+      import('./features/home/home.component').then((m) => m.HomeComponent),
   },
   {
     path: 'profile',
