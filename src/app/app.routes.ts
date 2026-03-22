@@ -45,6 +45,18 @@ export const appRoutes: Routes = [
       import('./features/courses/course-edit/course-edit.component').then((m) => m.CourseEditComponent),
   },
   {
+    path: 'courses/:id/lessons/new',
+    canActivate: [authGuard, teacherGuard],
+    loadComponent: () =>
+      import('./features/courses/lesson-create/lesson-create.component').then((m) => m.LessonCreateComponent),
+  },
+  {
+    path: 'courses/:id/lessons/:lessonId/edit',
+    canActivate: [authGuard, teacherGuard],
+    loadComponent: () =>
+      import('./features/courses/lesson-edit/lesson-edit.component').then((m) => m.LessonEditComponent),
+  },
+  {
     path: 'courses/:id',
     loadComponent: () =>
       import('./features/courses/course-detail/course-detail.component').then(

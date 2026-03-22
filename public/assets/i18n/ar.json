@@ -3,7 +3,10 @@
     "LOGIN_SUCCESS": "أهلاً بعودتك! تم تسجيل الدخول بنجاح.",
     "COURSE_CREATED": "تم إنشاء الكورس بنجاح.",
     "COURSE_UPDATED": "تم تحديث الكورس بنجاح.",
-    "COURSE_DELETED": "تم حذف الكورس."
+    "COURSE_DELETED": "تم حذف الكورس.",
+    "LESSON_CREATED": "تم إضافة الدرس بنجاح.",
+    "LESSON_UPDATED": "تم تعديل الدرس بنجاح.",
+    "LESSON_DELETED": "تم حذف الدرس."
   },
   "NAV": {
     "BRAND": "إديو جوي",
@@ -209,5 +212,37 @@
       "ERROR_TITLE": "عذرًا! الكود غير صالح",
       "PARENT_LINK": "العودة لتسجيل دخول ولي الأمر"
     }
+  },
+  "LESSONS": {
+    "BACK_TO_COURSE": "العودة للكورس",
+    "CREATE_BADGE": "درس جديد",
+    "CREATE_TITLE": "إضافة درس جديد",
+    "CREATE_SUBTITLE": "أضف محتوى تفاعلياً ومفيداً لطلابك.",
+    "LESSONS_TITLE": "دروس الكورس",
+    "ADD_LESSON": "إضافة درس",
+    "EDIT": "تعديل",
+    "DELETE": "حذف",
+    "DELETE_MODAL_TITLE": "حذف هذا الدرس؟",
+    "DELETE_CONFIRM": "سيتم إزالة هذا الدرس نهائياً ولن تتمكن من التراجع.",
+    "DELETE_CONFIRM_BTN": "حذف نهائي",
+    "FORM_TITLE": "عنوان الدرس",
+    "FORM_TITLE_PH": "مثال: مقدمة في الحروف",
+    "TITLE_REQUIRED": "العنوان مطلوب.",
+    "FORM_DESC": "الوصف (اختياري)",
+    "FORM_DESC_PH": "اشرح باختصار ما يحتويه هذا الدرس.",
+    "FORM_VIDEO_URL": "رابط الفيديو",
+    "FORM_VIDEO_PH": "https://www.youtube.com/watch?v=...",
+    "VIDEO_REQUIRED": "رابط الفيديو مطلوب.",
+    "VIDEO_INVALID": "يرجى إدخال رابط صحيح (http/https).",
+    "FORM_ORDER": "ترتيب الدرس",
+    "ORDER_REQUIRED": "الترتيب مطلوب.",
+    "EDIT_BADGE": "تحديث الدرس",
+    "EDIT_TITLE": "تعديل الدرس",
+    "EDIT_SUBTITLE": "قم بإجراء التغييرات المطلوبة على محتوى الدرس.",
+    "SUBMIT": "إضافة الدرس",
+    "CREATING": "جاري الإضافة...",
+    "CANCEL": "إلغاء",
+    "SAVING": "جاري الحفظ...",
+    "SAVE_CHANGES": "حفظ التغييرات"
   }
 }

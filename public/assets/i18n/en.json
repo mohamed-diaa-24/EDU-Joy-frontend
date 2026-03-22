@@ -3,7 +3,10 @@
     "LOGIN_SUCCESS": "Welcome back! You are now signed in.",
     "COURSE_CREATED": "Your course was created successfully.",
     "COURSE_UPDATED": "Course updated successfully.",
-    "COURSE_DELETED": "Course removed."
+    "COURSE_DELETED": "Course removed.",
+    "LESSON_CREATED": "Lesson created successfully.",
+    "LESSON_UPDATED": "Lesson updated successfully.",
+    "LESSON_DELETED": "Lesson removed."
   },
   "NAV": {
     "BRAND": "Edu Joy",
@@ -209,5 +212,37 @@
       "ERROR_TITLE": "Oops! Invalid code",
       "PARENT_LINK": "Back to parent login"
     }
+  },
+  "LESSONS": {
+    "BACK_TO_COURSE": "Back to course",
+    "CREATE_BADGE": "New Lesson",
+    "CREATE_TITLE": "Add a new lesson",
+    "CREATE_SUBTITLE": "Create engaging content for your students.",
+    "LESSONS_TITLE": "Course Lessons",
+    "ADD_LESSON": "Add Lesson",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "DELETE_MODAL_TITLE": "Delete this lesson?",
+    "DELETE_CONFIRM": "This will remove the lesson permanently. Are you sure?",
+    "DELETE_CONFIRM_BTN": "Delete",
+    "FORM_TITLE": "Lesson Title",
+    "FORM_TITLE_PH": "e.g. Introduction to Alphabets",
+    "TITLE_REQUIRED": "Title is required.",
+    "FORM_DESC": "Description (Optional)",
+    "FORM_DESC_PH": "Briefly describe what this lesson covers.",
+    "FORM_VIDEO_URL": "Video URL",
+    "FORM_VIDEO_PH": "https://www.youtube.com/watch?v=...",
+    "VIDEO_REQUIRED": "Video URL is required.",
+    "VIDEO_INVALID": "Please enter a valid HTTP(s) URL.",
+    "FORM_ORDER": "Lesson Order",
+    "ORDER_REQUIRED": "Order is required.",
+    "EDIT_BADGE": "Update Lesson",
+    "EDIT_TITLE": "Edit Lesson",
+    "EDIT_SUBTITLE": "Make changes to your lesson content.",
+    "SUBMIT": "Add Lesson",
+    "CREATING": "Adding...",
+    "CANCEL": "Cancel",
+    "SAVING": "Saving...",
+    "SAVE_CHANGES": "Save changes"
   }
 }

@@ -10,6 +10,7 @@ import { ApiResponse } from '../../../core/models/auth-api.model';
 import { CourseDetails } from '../../../core/models/course.model';
 import { AuthService } from '../../../core/services/auth.service';
 import { CourseService } from '../../../core/services/course.service';
+import { LessonService } from '../../../core/services/lesson.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { ConfirmDialogComponent } from '../../../shared/ui/confirm-dialog/confirm-dialog.component';
 
@@ -23,6 +24,7 @@ export class CourseDetailComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly courseService = inject(CourseService);
+  private readonly lessonService = inject(LessonService);
   private readonly translate = inject(TranslateService);
   private readonly authService = inject(AuthService);
   private readonly notificationService = inject(NotificationService);
@@ -33,6 +35,10 @@ export class CourseDetailComponent {
   readonly course = signal<CourseDetails | null>(null);
   readonly deleting = signal(false);
   readonly deleteDialogOpen = signal(false);
+  
+  readonly deletingLessonId = signal<number | null>(null);
+  readonly deleteLessonDialogOpen = signal(false);
+  readonly deletingLesson = signal(false);
 
   readonly canManageCourse = computed(() => {
     if (this.authService.getCurrentRole()?.toLowerCase() !== 'teacher') {
@@ -119,6 +125,58 @@ export class CourseDetailComponent {
         error: (err: HttpErrorResponse) => {
           this.deleting.set(false);
           this.deleteDialogOpen.set(false);
+          const api = err.error as Partial<ApiResponse<unknown>> | undefined;
+          this.error.set(api?.errors?.[0] ?? api?.message ?? err.message);
+        },
+      });
+  }
+
+  openDeleteLessonDialog(lessonId: number): void {
+    if (!this.canManageCourse() || this.deletingLessonId() != null) return;
+    this.deletingLessonId.set(lessonId);
+    this.deleteLessonDialogOpen.set(true);
+  }
+
+  onDeleteLessonDialogCancelled(): void {
+    this.deleteLessonDialogOpen.set(false);
+    this.deletingLessonId.set(null);
+  }
+
+  onDeleteLessonConfirmed(): void {
+    const lId = this.deletingLessonId();
+    if (!lId || !this.canManageCourse() || this.deletingLesson()) return;
+
+    this.deletingLesson.set(true);
+
+    this.lessonService
+      .deleteLesson(lId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (response: ApiResponse<unknown>) => {
+          this.deletingLesson.set(false);
+          this.deleteLessonDialogOpen.set(false);
+          this.deletingLessonId.set(null);
+          if (!response.success) {
+            this.error.set(response.errors?.[0] ?? response.message);
+            return;
+          }
+          this.notificationService.show('NOTIFICATIONS.LESSON_DELETED', 'success');
+          
+          const c = this.course();
+          if (c) {
+              this.loading.set(true);
+              this.courseService.getCourseById(c.id).subscribe((res) => {
+                  if (res.success && res.data) {
+                      this.course.set(res.data);
+                  }
+                  this.loading.set(false);
+              });
+          }
+        },
+        error: (err: HttpErrorResponse) => {
+          this.deletingLesson.set(false);
+          this.deleteLessonDialogOpen.set(false);
+          this.deletingLessonId.set(null);
           const api = err.error as Partial<ApiResponse<unknown>> | undefined;
           this.error.set(api?.errors?.[0] ?? api?.message ?? err.message);
         },

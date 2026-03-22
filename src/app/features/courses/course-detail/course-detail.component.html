@@ -92,25 +92,54 @@
           </div>
 
           <div class="text-start">
-            <h2 class="text-lg font-black text-violet-800">
-              {{ 'COURSES.LESSONS' | translate }}
-            </h2>
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-lg font-black text-violet-800">
+                {{ 'LESSONS.LESSONS_TITLE' | translate }}
+              </h2>
+              @if (canManageCourse()) {
+                <a
+                  [routerLink]="['/courses', c.id, 'lessons', 'new']"
+                  class="rounded-2xl bg-violet-100 px-4 py-2 text-sm font-bold text-violet-800 shadow transition-all hover:bg-violet-200"
+                >
+                  + {{ 'LESSONS.ADD_LESSON' | translate }}
+                </a>
+              }
+            </div>
             @if (!c.lessons.length) {
               <p class="mt-2 text-slate-500">{{ 'COURSES.NO_LESSONS' | translate }}</p>
             } @else {
               <ol class="mt-4 space-y-3">
                 @for (lesson of c.lessons; track lesson.id) {
                   <li
-                    class="flex items-start gap-4 rounded-2xl border border-slate-100 bg-slate-50/80 p-4 shadow-inner"
+                    class="flex items-start justify-between gap-4 rounded-2xl border border-slate-100 bg-slate-50/80 p-4 shadow-inner"
                   >
-                    <span
-                      class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-100 text-sm font-black text-violet-800"
-                    >
-                      {{ lesson.order }}
-                    </span>
-                    <div class="min-w-0 flex-1">
-                      <p class="font-bold text-slate-800">{{ lesson.title }}</p>
+                    <div class="flex items-start gap-4">
+                      <span
+                        class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-100 text-sm font-black text-violet-800"
+                      >
+                        {{ lesson.order }}
+                      </span>
+                      <div class="min-w-0 flex-1">
+                        <p class="font-bold text-slate-800">{{ lesson.title }}</p>
+                      </div>
                     </div>
+                    @if (canManageCourse()) {
+                      <div class="flex gap-2 shrink-0 w-fit">
+                        <a
+                          [routerLink]="['/courses', c.id, 'lessons', lesson.id, 'edit']"
+                          class="rounded-xl bg-white px-3 py-1.5 text-xs font-bold text-sky-700 shadow-sm border border-slate-200 hover:bg-slate-50"
+                        >
+                          {{ 'LESSONS.EDIT' | translate }}
+                        </a>
+                        <button
+                          type="button"
+                          (click)="openDeleteLessonDialog(lesson.id)"
+                          class="rounded-xl bg-rose-50 px-3 py-1.5 text-xs font-bold text-rose-700 shadow-sm border border-rose-100 hover:bg-rose-100"
+                        >
+                          {{ 'LESSONS.DELETE' | translate }}
+                        </button>
+                      </div>
+                    }
                   </li>
                 }
               </ol>
@@ -131,5 +160,17 @@
     [danger]="true"
     (confirmed)="onDeleteConfirmed()"
     (cancelled)="onDeleteDialogCancelled()"
+  />
+
+  <app-confirm-dialog
+    [open]="deleteLessonDialogOpen()"
+    [titleKey]="'LESSONS.DELETE_MODAL_TITLE'"
+    [messageKey]="'LESSONS.DELETE_CONFIRM'"
+    [confirmKey]="'LESSONS.DELETE_CONFIRM_BTN'"
+    [cancelKey]="'COMMON.CANCEL'"
+    [loading]="deletingLesson()"
+    [danger]="true"
+    (confirmed)="onDeleteLessonConfirmed()"
+    (cancelled)="onDeleteLessonDialogCancelled()"
   />
 </section>
