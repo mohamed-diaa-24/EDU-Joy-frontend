@@ -1,0 +1,84 @@
+<section class="min-h-[80vh] px-4 py-8 sm:px-6">
+  <div class="mx-auto max-w-6xl">
+    <header class="mb-8 text-start">
+      <span
+        class="inline-flex rounded-2xl bg-amber-100 px-4 py-2 text-sm font-bold tracking-wide text-amber-800"
+      >
+        {{ 'CHILD.MY_COURSES_BADGE' | translate }}
+      </span>
+      <h1 class="mt-4 text-3xl font-black text-slate-800 sm:text-5xl">
+        {{ 'CHILD.MY_COURSES_TITLE' | translate }}
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg text-slate-600">
+        {{ 'CHILD.MY_COURSES_SUBTITLE' | translate }}
+      </p>
+    </header>
+
+    @if (error()) {
+      <div
+        class="rounded-3xl border border-rose-200 bg-rose-50 p-6 text-start font-bold text-rose-800 shadow-sm"
+        role="alert"
+      >
+        {{ error() }}
+      </div>
+    }
+
+    @if (loading()) {
+      <div class="flex min-h-[40vh] items-center justify-center">
+        <div
+          class="h-16 w-16 animate-spin rounded-full border-4 border-amber-200 border-t-amber-500"
+        ></div>
+      </div>
+    } @else if (!error() && courses().length === 0) {
+      <div
+        class="flex min-h-[40vh] flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-200 bg-slate-50 p-6 text-center"
+      >
+        <span class="text-6xl text-slate-300">📚</span>
+        <h3 class="mt-4 text-xl font-bold text-slate-600">
+          {{ 'CHILD.NO_COURSES' | translate }}
+        </h3>
+        <p class="mt-2 text-slate-500">
+          {{ 'CHILD.NO_COURSES_HINT' | translate }}
+        </p>
+      </div>
+    } @else if (courses().length > 0) {
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        @for (course of courses(); track course.id) {
+          <article
+            class="group flex flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-lg transition-all hover:-translate-y-2 hover:shadow-2xl hover:shadow-amber-100/50 cursor-pointer"
+            [routerLink]="['/my-courses', course.id, 'lessons']"
+          >
+            <div class="relative h-48 sm:h-56 bg-gradient-to-br from-violet-200 to-sky-200">
+              @if (course.imageUrl) {
+                <img
+                  [src]="course.imageUrl"
+                  [attr.alt]="course.title"
+                  class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  (error)="$any($event.target).style.display = 'none'"
+                />
+              }
+              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-900/60 to-transparent p-4">
+                <h2 class="text-xl font-black text-white line-clamp-2 drop-shadow-md">
+                  {{ course.title }}
+                </h2>
+              </div>
+            </div>
+            <div class="flex flex-1 flex-col p-6 text-start">
+              <p class="line-clamp-3 flex-1 text-sm leading-relaxed text-slate-600">
+                {{ course.description }}
+              </p>
+
+              <div class="mt-6 flex items-center justify-end">
+                <span
+                  class="inline-flex rounded-full bg-violet-50 px-3 py-1 text-xs font-bold text-violet-700 transition-colors group-hover:bg-violet-100 group-hover:text-violet-800"
+                >
+                  {{ 'CHILD.START_LEARNING' | translate }} →
+                </span>
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </div>
+</section>

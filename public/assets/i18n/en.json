@@ -11,6 +11,7 @@
   "NAV": {
     "BRAND": "Edu Joy",
     "COURSES": "Courses",
+    "MY_COURSES": "My Courses",
     "DASHBOARD": "Home",
     "LOGIN": "Login",
     "REGISTER": "Register",
@@ -244,5 +245,17 @@
     "CANCEL": "Cancel",
     "SAVING": "Saving...",
     "SAVE_CHANGES": "Save changes"
+  },
+  "CHILD": {
+    "MY_COURSES_BADGE": "My Learning",
+    "MY_COURSES_TITLE": "My Courses",
+    "MY_COURSES_SUBTITLE": "Welcome to your personal learning dashboard! Here are all the courses you have access to.",
+    "NO_COURSES": "No courses yet",
+    "NO_COURSES_HINT": "Ask your parents to enroll you in some fun courses!",
+    "TEACHER": "Teacher",
+    "START_LEARNING": "Start Learning",
+    "BACK_TO_MY_COURSES": "Back to My Courses",
+    "NO_LESSONS_YET": "No lessons have been added to this course yet.",
+    "COURSE_LESSONS": "Course Lessons"
   }
 }

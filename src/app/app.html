@@ -46,6 +46,15 @@
           {{ 'NAV.CHILD_LOGIN' | translate }}
         </a>
       } @else {
+        @if (authService.getCurrentRole()?.toLowerCase() === 'child') {
+          <a
+            routerLink="/my-courses"
+            routerLinkActive="bg-amber-500 text-white"
+            class="rounded-2xl bg-amber-50 px-4 py-2 text-sm font-bold text-amber-700 shadow-lg transition-all hover:scale-105"
+          >
+            {{ 'NAV.MY_COURSES' | translate }}
+          </a>
+        }
         <a
           routerLink="/profile"
           routerLinkActive="bg-indigo-500 text-white"
