@@ -1,5 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
+import { environment } from '../../../environments/environment';
+
 import { catchError, finalize, Observable, tap, throwError } from 'rxjs';
 
 import {
@@ -18,8 +20,8 @@ import {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = 'https://localhost:5001/api/auth';
-  private readonly childBaseUrl = 'https://localhost:5001/api/child';
+  private readonly baseUrl = `${environment.apiUrl}/auth`;
+  private readonly childBaseUrl = `${environment.apiUrl}/child`;
   private static readonly tokenStorageKey = 'auth.token';
   private static readonly refreshTokenStorageKey = 'auth.refreshToken';
   private static readonly displayNameStorageKey = 'auth.displayName';

@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 import {
   ConfirmPaymentRequestDto,
@@ -12,7 +13,7 @@ import {
 @Injectable({ providedIn: 'root' })
 export class PaymentService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = 'https://localhost:5001/api/payments';
+  private readonly baseUrl = `${environment.apiUrl}/payments`;
 
   createPayment(payload: CreatePaymentRequestDto): Observable<CreatePaymentResponse> {
     return this.http.post<CreatePaymentResponse>(`${this.baseUrl}/create`, payload).pipe(

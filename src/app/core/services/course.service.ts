@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, throwError, Subject, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 import {
   CourseDetailsResponse,
@@ -16,7 +17,7 @@ import {
 @Injectable({ providedIn: 'root' })
 export class CourseService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = 'https://localhost:5001/api/courses';
+  private readonly baseUrl = `${environment.apiUrl}/courses`;
 
   searchCourses(params: CourseSearchParams = {}): Observable<CourseSearchResponse> {
     let httpParams = new HttpParams()

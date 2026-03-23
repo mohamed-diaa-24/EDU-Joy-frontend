@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 import {
   LessonCreateRequest,
@@ -14,7 +15,7 @@ import {
 @Injectable({ providedIn: 'root' })
 export class LessonService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = 'https://localhost:5001/api/lessons';
+  private readonly baseUrl = `${environment.apiUrl}/lessons`;
 
   getLessonById(lessonId: number): Observable<LessonDetailsResponse> {
     return this.http.get<LessonDetailsResponse>(`${this.baseUrl}/${lessonId}`).pipe(

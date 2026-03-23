@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 import {
   AddChildRequestDto,
@@ -13,7 +14,7 @@ import {
 @Injectable({ providedIn: 'root' })
 export class ParentService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = 'https://localhost:5001/api/parent';
+  private readonly baseUrl = `${environment.apiUrl}/parent`;
 
   getChildren(): Observable<GetChildrenResponse> {
     return this.http.get<GetChildrenResponse>(`${this.baseUrl}/children`).pipe(
