@@ -1,3 +1,24 @@
+@import 'plyr/dist/plyr.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --plyr-color-main: #0ea5e9; /* Tailwind Sky Blue */
+  --plyr-video-control-background-hover: #0ea5e9;
+  --plyr-control-radius: 12px;
+  --plyr-font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;
+}
+
+/* Rounded Plyr container for Kids Theme inside intrinsic 16:9 ratio blocks */
+.kids-video-wrapper .plyr {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}

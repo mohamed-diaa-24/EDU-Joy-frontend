@@ -27,8 +27,11 @@ export class ChildLessonsComponent {
   readonly error = signal<string | null>(null);
   readonly lessons = signal<ChildLessonDto[]>([]);
   readonly activeLesson = signal<ChildLessonDto | null>(null);
-  readonly safeVideoUrl = signal<SafeResourceUrl | null>(null);
+  readonly safeVideoUrl = signal<any>(null);
   readonly isYoutube = signal<boolean>(false);
+  readonly isVideoLoading = signal<boolean>(false);
+  
+  private player?: any;
 
   constructor() {
     this.route.paramMap
@@ -68,16 +71,68 @@ export class ChildLessonsComponent {
       });
   }
 
+  ngOnDestroy(): void {
+    this.destroyPlayer();
+  }
+
+  private destroyPlayer(): void {
+    if (this.player) {
+      this.player.destroy();
+      this.player = undefined;
+    }
+  }
+
   selectLesson(lesson: ChildLessonDto): void {
     this.activeLesson.set(lesson);
+    this.isVideoLoading.set(true);
+    
     const videoId = this.extractYoutubeId(lesson.videoUrl);
     if (videoId) {
+      this.destroyPlayer();
       this.isYoutube.set(true);
       const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0&showinfo=0&modestbranding=1`;
       this.safeVideoUrl.set(this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl));
+      this.isVideoLoading.set(false);
     } else {
+      this.destroyPlayer();
       this.isYoutube.set(false);
-      this.safeVideoUrl.set(this.sanitizer.bypassSecurityTrustResourceUrl(lesson.videoUrl));
+      // For <video src> elements we must use bypassSecurityTrustUrl, not bypassSecurityTrustResourceUrl
+      this.safeVideoUrl.set(this.sanitizer.bypassSecurityTrustUrl(lesson.videoUrl));
+      
+      setTimeout(() => {
+        // Dynamic import Plyr to avoid SSR/Angular compiler issues
+        import('plyr').then((PlyrModule) => {
+          const PlyrConstructor = (PlyrModule as any).default || PlyrModule;
+          this.player = new PlyrConstructor('.kids-player', {
+            controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
+          });
+          
+          // Explicitly assign the source to Plyr to bypass Angular DOM binding delays
+          this.player.source = {
+            type: 'video',
+            sources: [
+              {
+                src: lesson.videoUrl,
+                type: 'video/mp4',
+              }
+            ]
+          };
+
+          // Check if video is already loaded to avoid missing the canplay event
+          const media = this.player.media;
+          if (media && media.readyState >= 3) {
+            this.isVideoLoading.set(false);
+          }
+          
+          this.player.on('canplay', () => this.isVideoLoading.set(false));
+          this.player.on('loadeddata', () => this.isVideoLoading.set(false));
+          this.player.on('playing', () => this.isVideoLoading.set(false));
+          this.player.on('error', () => {
+             this.isVideoLoading.set(false);
+             this.error.set(this.translate.instant('CHILD.VIDEO_ERROR') || 'Error loading video securely.');
+          });
+        });
+      }, 50);
     }
   }
 

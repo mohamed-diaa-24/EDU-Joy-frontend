@@ -38,7 +38,7 @@
         <!-- Main Video Area -->
         <div class="flex-1 space-y-4">
           <div class="overflow-hidden rounded-3xl bg-black shadow-2xl ring-4 ring-amber-100">
-            <div class="relative w-full pt-[56.25%]">
+            <div class="relative w-full pt-[56.25%] kids-video-wrapper">
               @if (safeVideoUrl()) {
                 @if (isYoutube()) {
                   <iframe
@@ -50,12 +50,20 @@
                     class="absolute left-0 top-0 h-full w-full bg-slate-900"
                   ></iframe>
                 } @else {
+                  @if (isVideoLoading()) {
+                    <div class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-slate-900/90 backdrop-blur-md transition-opacity">
+                      <div class="h-16 w-16 animate-spin rounded-full border-4 border-slate-700 border-t-sky-400 shadow-[0_0_15px_rgba(56,189,248,0.5)]"></div>
+                      <p class="mt-4 font-black tracking-widest text-sky-400 drop-shadow-md">LOADING...</p>
+                    </div>
+                  }
                   <video
-                    [src]="safeVideoUrl()"
-                    controls
                     controlsList="nodownload"
-                    class="absolute left-0 top-0 h-full w-full bg-slate-900"
-                  ></video>
+                    disablePictureInPicture
+                    oncontextmenu="return false;"
+                    class="kids-player absolute left-0 top-0 h-full w-full bg-slate-900 object-contain"
+                  >
+                    <!-- Plyr injects the source here -->
+                  </video>
                 }
               } @else {
                 <div class="absolute inset-0 flex items-center justify-center bg-slate-900">
