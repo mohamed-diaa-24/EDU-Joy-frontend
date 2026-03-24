@@ -7,7 +7,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const token = authService.getAccessToken();
 
-  if (!token) {
+  if (!token || req.url.includes('cloudinary.com')) {
     return next(req);
   }
 

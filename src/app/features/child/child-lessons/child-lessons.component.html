@@ -40,14 +40,23 @@
           <div class="overflow-hidden rounded-3xl bg-black shadow-2xl ring-4 ring-amber-100">
             <div class="relative w-full pt-[56.25%]">
               @if (safeVideoUrl()) {
-                <iframe
-                  [src]="safeVideoUrl()"
-                  title="YouTube video player"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen
-                  class="absolute left-0 top-0 h-full w-full bg-slate-900"
-                ></iframe>
+                @if (isYoutube()) {
+                  <iframe
+                    [src]="safeVideoUrl()"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                    class="absolute left-0 top-0 h-full w-full bg-slate-900"
+                  ></iframe>
+                } @else {
+                  <video
+                    [src]="safeVideoUrl()"
+                    controls
+                    controlsList="nodownload"
+                    class="absolute left-0 top-0 h-full w-full bg-slate-900"
+                  ></video>
+                }
               } @else {
                 <div class="absolute inset-0 flex items-center justify-center bg-slate-900">
                   <p class="font-bold text-slate-500">Video not available</p>

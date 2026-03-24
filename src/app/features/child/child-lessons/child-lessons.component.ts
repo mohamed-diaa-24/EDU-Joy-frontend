@@ -28,6 +28,7 @@ export class ChildLessonsComponent {
   readonly lessons = signal<ChildLessonDto[]>([]);
   readonly activeLesson = signal<ChildLessonDto | null>(null);
   readonly safeVideoUrl = signal<SafeResourceUrl | null>(null);
+  readonly isYoutube = signal<boolean>(false);
 
   constructor() {
     this.route.paramMap
@@ -71,10 +72,11 @@ export class ChildLessonsComponent {
     this.activeLesson.set(lesson);
     const videoId = this.extractYoutubeId(lesson.videoUrl);
     if (videoId) {
+      this.isYoutube.set(true);
       const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0&showinfo=0&modestbranding=1`;
       this.safeVideoUrl.set(this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl));
     } else {
-      // If it's not YouTube or ID failed to parse, maybe just trust it or leave null
+      this.isYoutube.set(false);
       this.safeVideoUrl.set(this.sanitizer.bypassSecurityTrustResourceUrl(lesson.videoUrl));
     }
   }

@@ -4,6 +4,7 @@ export interface LessonCreateRequest {
   title: string;
   description: string;
   videoUrl: string;
+  cloudinaryPublicId?: string;
   order: number;
   courseId: number;
 }
@@ -15,6 +16,7 @@ export interface LessonDetails {
   title: string;
   description: string;
   videoUrl: string;
+  cloudinaryPublicId?: string;
   order: number;
   courseId: number;
   createdAt: string;

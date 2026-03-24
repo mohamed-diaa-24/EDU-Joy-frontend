@@ -67,25 +67,14 @@
 
       <label class="block text-start">
         <span class="mb-1 block text-sm font-bold text-slate-700">
-          {{ 'LESSONS.FORM_VIDEO_URL' | translate }}
+          {{ 'LESSONS.FORM_VIDEO_FILE' | translate }}
         </span>
         <input
-          type="url"
-          formControlName="videoUrl"
-          class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-start outline-none transition focus:border-violet-400 focus:ring-2 focus:ring-violet-200"
-          [class.border-rose-300]="form.controls.videoUrl.invalid && form.controls.videoUrl.touched"
-          [placeholder]="'LESSONS.FORM_VIDEO_PH' | translate"
+          type="file"
+          accept="video/*"
+          (change)="onVideoFileChange($event)"
+          class="w-full file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-start outline-none transition focus:border-violet-400 focus:ring-2 focus:ring-violet-200"
         />
-        @if (form.controls.videoUrl.hasError('required') && form.controls.videoUrl.touched) {
-          <span class="mt-1 block text-xs font-bold text-rose-600">
-            {{ 'LESSONS.VIDEO_REQUIRED' | translate }}
-          </span>
-        }
-        @if (form.controls.videoUrl.hasError('pattern') && form.controls.videoUrl.touched) {
-          <span class="mt-1 block text-xs font-bold text-rose-600">
-            {{ 'LESSONS.VIDEO_INVALID' | translate }}
-          </span>
-        }
       </label>
 
       <label class="block text-start">
@@ -107,6 +96,21 @@
       </label>
 
       <div class="flex flex-wrap gap-3 pt-2">
+        @if (isUploading()) {
+          <div class="w-full pb-4">
+            <div class="mb-2 flex items-center justify-between">
+              <span class="text-sm font-black text-violet-700">Uploading Video...</span>
+              <span class="text-sm font-black text-sky-600">{{ uploadProgress() }}%</span>
+            </div>
+            <div class="h-4 w-full overflow-hidden rounded-full bg-slate-100 shadow-inner">
+              <div
+                class="h-full rounded-full bg-gradient-to-r from-emerald-400 via-sky-400 to-violet-500 bg-[length:200%_200%] animate-pulse transition-all duration-300 ease-out"
+                [style.width.%]="uploadProgress()"
+              ></div>
+            </div>
+          </div>
+        }
+
         <button
           type="submit"
           [disabled]="submitting()"
