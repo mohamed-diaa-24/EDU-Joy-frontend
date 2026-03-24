@@ -1,5 +1,14 @@
 import { ApiResponse } from './auth-api.model';
 
+export interface QuizQuestionDto {
+  id?: number;
+  questionText: string;
+  option1: string;
+  option2: string;
+  option3: string;
+  correctOptionIndex: number;
+}
+
 export interface LessonCreateRequest {
   title: string;
   description: string;
@@ -7,6 +16,7 @@ export interface LessonCreateRequest {
   cloudinaryPublicId?: string;
   order: number;
   courseId: number;
+  quizQuestions?: QuizQuestionDto[];
 }
 
 export type LessonUpdateRequest = LessonCreateRequest;
@@ -20,6 +30,7 @@ export interface LessonDetails {
   order: number;
   courseId: number;
   createdAt: string;
+  quizQuestions?: QuizQuestionDto[];
 }
 
 export type LessonDetailsResponse = ApiResponse<LessonDetails>;

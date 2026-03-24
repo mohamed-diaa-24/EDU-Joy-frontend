@@ -256,7 +256,16 @@
     "CREATING": "Adding...",
     "CANCEL": "Cancel",
     "SAVING": "Saving...",
-    "SAVE_CHANGES": "Save changes"
+    "SAVE_CHANGES": "Save changes",
+    "QUIZ_QUESTIONS": "Quiz Questions",
+    "ADD_QUESTION": "Add Question",
+    "QUESTION": "Question",
+    "QUESTION_TEXT": "Question Text",
+    "OPTION_1": "Option 1",
+    "OPTION_2": "Option 2",
+    "OPTION_3": "Option 3",
+    "CORRECT_OPTION": "Correct Option",
+    "VIDEO_REQUIRED_FILE": "Please select a video file."
   },
   "CHILD": {
     "MY_COURSES_BADGE": "My Learning",
@@ -268,7 +277,17 @@
     "START_LEARNING": "Start Learning",
     "BACK_TO_MY_COURSES": "Back to My Courses",
     "NO_LESSONS_YET": "No lessons have been added to this course yet.",
-    "COURSE_LESSONS": "Course Lessons"
+    "COURSE_LESSONS": "Course Lessons",
+    "LESSON_COMPLETED": "Great! You have completed the lesson successfully",
+    "POINTS_EARNED": "+50 Points!",
+    "READY_FOR_QUIZ": "Are you ready for a quick quiz?",
+    "LESSON_QUIZ": "Lesson Quiz",
+    "SUBMIT_ANSWERS": "Submit Answers",
+    "QUIZ_PASSED": "Well done! Correct answers",
+    "FINISH_LESSON": "Finish Lesson and Get Points!",
+    "LESSON_LOCKED": "You must complete the previous lesson first!",
+    "VIDEO_ERROR": "Error loading video securely.",
+    "ANSWER_ALL_QUESTIONS": "Please answer all questions."
   },
   "PARENT": {
     "DASHBOARD_BADGE": "Parent Portal",

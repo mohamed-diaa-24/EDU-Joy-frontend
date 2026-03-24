@@ -95,6 +95,48 @@
         }
       </label>
 
+      <!-- Quiz Section -->
+      <div class="border-t border-slate-100 pt-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-xl font-bold text-violet-800">
+            {{ 'LESSONS.QUIZ_QUESTIONS' | translate: { default: 'أسئلة الاختبار' } }}
+          </h3>
+          <button type="button" (click)="addQuestion()" class="rounded-xl bg-violet-100 px-4 py-2 text-sm font-bold text-violet-700 hover:bg-violet-200 transition-colors">
+            + {{ 'LESSONS.ADD_QUESTION' | translate: { default: 'إضافة سؤال' } }}
+          </button>
+        </div>
+        
+        <div formArrayName="quizQuestions" class="space-y-6">
+          @for (q of quizQuestions.controls; track q; let i = $index) {
+            <div [formGroupName]="i" class="rounded-2xl border border-slate-200 bg-slate-50 p-6 relative shadow-sm">
+              <button type="button" (click)="removeQuestion(i)" title="Remove" class="absolute top-4 right-4 rtl:left-4 rtl:right-auto text-rose-500 hover:bg-rose-100 rounded-lg p-2 transition-colors">
+                🗑️
+              </button>
+              <h4 class="font-bold text-slate-700 mb-4">{{ 'LESSONS.QUESTION' | translate: { default: 'سؤال' } }} {{ i + 1 }}</h4>
+              
+              <div class="space-y-4">
+                <input formControlName="questionText" [placeholder]="'LESSONS.QUESTION_TEXT' | translate: { default: 'نص السؤال' }" class="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-200 transition-all text-start" />
+                
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <input formControlName="option1" [placeholder]="'LESSONS.OPTION_1' | translate: { default: 'الخيار 1' }" class="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-200 transition-all text-start" />
+                  <input formControlName="option2" [placeholder]="'LESSONS.OPTION_2' | translate: { default: 'الخيار 2' }" class="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-200 transition-all text-start" />
+                  <input formControlName="option3" [placeholder]="'LESSONS.OPTION_3' | translate: { default: 'الخيار 3' }" class="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-200 transition-all text-start" />
+                </div>
+                
+                <label class="block mt-2 font-bold text-slate-700">
+                  {{ 'LESSONS.CORRECT_OPTION' | translate: { default: 'الخيار الصحيح' } }}: 
+                  <select formControlName="correctOptionIndex" class="mx-2 rounded-xl border border-slate-200 px-4 py-2 outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-200 text-start">
+                    <option [value]="0">1</option>
+                    <option [value]="1">2</option>
+                    <option [value]="2">3</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
       <div class="flex flex-wrap gap-3 pt-2">
         @if (isUploading()) {
           <div class="w-full pb-4">

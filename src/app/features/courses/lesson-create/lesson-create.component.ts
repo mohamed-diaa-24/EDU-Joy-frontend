@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse, HttpEvent, HttpEventType } from '@angular/common/http';
@@ -40,7 +40,27 @@ export class LessonCreateComponent {
     title: ['', [Validators.required, Validators.maxLength(200)]],
     description: ['', [Validators.maxLength(2000)]],
     order: [1, [Validators.required, Validators.min(1)]],
+    quizQuestions: this.formBuilder.array([] as FormGroup[])
   });
+
+  get quizQuestions(): FormArray {
+    return this.form.get('quizQuestions') as FormArray;
+  }
+
+  addQuestion(): void {
+    const questionForm = this.formBuilder.group({
+      questionText: ['', Validators.required],
+      option1: ['', Validators.required],
+      option2: ['', Validators.required],
+      option3: ['', Validators.required],
+      correctOptionIndex: [0, [Validators.required, Validators.min(0), Validators.max(2)]]
+    });
+    this.quizQuestions.push(questionForm);
+  }
+
+  removeQuestion(index: number): void {
+    this.quizQuestions.removeAt(index);
+  }
 
   constructor() {
     this.route.paramMap
@@ -105,6 +125,13 @@ export class LessonCreateComponent {
               cloudinaryPublicId: uploadResponse.public_id,
               order: Number(v.order),
               courseId: cId,
+              quizQuestions: (this.form.get('quizQuestions')?.value || []).map((q: any) => ({
+                questionText: q.questionText,
+                option1: q.option1,
+                option2: q.option2,
+                option3: q.option3,
+                correctOptionIndex: Number(q.correctOptionIndex)
+              })),
             });
           }
           return EMPTY;

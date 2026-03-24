@@ -256,7 +256,16 @@
     "CREATING": "جاري الإضافة...",
     "CANCEL": "إلغاء",
     "SAVING": "جاري الحفظ...",
-    "SAVE_CHANGES": "حفظ التغييرات"
+    "SAVE_CHANGES": "حفظ التغييرات",
+    "QUIZ_QUESTIONS": "أسئلة الاختبار",
+    "ADD_QUESTION": "إضافة سؤال",
+    "QUESTION": "سؤال",
+    "QUESTION_TEXT": "نص السؤال",
+    "OPTION_1": "الخيار الأول",
+    "OPTION_2": "الخيار الثاني",
+    "OPTION_3": "الخيار الثالث",
+    "CORRECT_OPTION": "الخيار الصحيح",
+    "VIDEO_REQUIRED_FILE": "يرجى تحديد ملف فيديو."
   },
   "CHILD": {
     "MY_COURSES_BADGE": "مساحتي التعليمية",
@@ -268,7 +277,17 @@
     "START_LEARNING": "ابدأ التعلّم",
     "BACK_TO_MY_COURSES": "العودة لكورساتي",
     "NO_LESSONS_YET": "لم يتم إضافة دروس لهذا الكورس بعد.",
-    "COURSE_LESSONS": "محتوى الكورس"
+    "COURSE_LESSONS": "محتوى الكورس",
+    "LESSON_COMPLETED": "رائع! لقد أكملت الدرس بنجاح",
+    "POINTS_EARNED": "+50 نقطة!",
+    "READY_FOR_QUIZ": "هل أنت مستعد لاختبار قصير؟",
+    "LESSON_QUIZ": "اختبار الدرس",
+    "SUBMIT_ANSWERS": "تأكيد الإجابات",
+    "QUIZ_PASSED": "أحسنت! إجابات صحيحة",
+    "FINISH_LESSON": "أكمل الدرس واحصل على النقاط!",
+    "LESSON_LOCKED": "يجب عليك إكمال الدرس السابق أولاً!",
+    "VIDEO_ERROR": "حدث خطأ أثناء تحميل الفيديو بشكل آمن.",
+    "ANSWER_ALL_QUESTIONS": "الرجاء الإجابة على جميع الأسئلة."
   },
   "PARENT": {
     "DASHBOARD_BADGE": "بوابة ولي الأمر",
