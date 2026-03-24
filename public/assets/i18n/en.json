@@ -30,7 +30,8 @@
     "WELCOME": "Welcome",
     "SAVE": "Save",
     "CANCEL": "Cancel",
-    "CONFIRM_ACTION": "Confirm"
+    "CONFIRM_ACTION": "Confirm",
+    "SAVING" :"Saving..."
   },
   "LANDING": {
     "HERO": {
@@ -133,7 +134,10 @@
     "ENROLL_CHILD": "Enroll Child",
     "SELECT_CHILD_DESC": "Select which child you want to enroll in this amazing journey.",
     "PAY_AND_ENROLL": "Pay & Enroll",
-    "ENROLL_NOW": "Enroll Now"
+    "ENROLL_NOW": "Enroll Now",
+    "PAYMENT_DETAILS": "Payment Details",
+    "CONFIRM_PAYMENT": "Confirm Payment",
+    "ALREADY_ENROLLED": "Already Enrolled"
   },
   "PROFILE": {
     "BADGE": "Your learning account",

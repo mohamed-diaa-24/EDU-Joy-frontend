@@ -4,7 +4,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { EMPTY, map, switchMap } from 'rxjs';
+import { forkJoin, map, switchMap, EMPTY } from 'rxjs';
+import { loadStripe, Stripe, StripeElements } from '@stripe/stripe-js';
+import { environment } from '../../../../environments/environment';
 
 import { ApiResponse } from '../../../core/models/auth-api.model';
 import { CourseDetails } from '../../../core/models/course.model';
@@ -43,7 +45,7 @@ export class CourseDetailComponent {
   readonly course = signal<CourseDetails | null>(null);
   readonly deleting = signal(false);
   readonly deleteDialogOpen = signal(false);
-  
+
   readonly deletingLessonId = signal<number | null>(null);
   readonly deleteLessonDialogOpen = signal(false);
   readonly deletingLesson = signal(false);
@@ -52,9 +54,18 @@ export class CourseDetailComponent {
   readonly enrollModalOpen = signal(false);
   readonly loadingChildren = signal(false);
   readonly enrollChildren = signal<ChildDto[]>([]);
+  readonly enrolledChildIds = signal<number[]>([]);
   readonly selectedChildId = signal<number | null>(null);
   readonly enrolling = signal(false);
   readonly enrollError = signal<string | null>(null);
+
+  // Stripe Payment State
+  readonly isPaymentStep = signal(false);
+  readonly clientSecret = signal<string | null>(null);
+  readonly paymentId = signal<number | null>(null);
+  private stripePromise = loadStripe(environment.stripePublishableKey);
+  private stripe: Stripe | null = null;
+  private elements: StripeElements | null = null;
 
   readonly canManageCourse = computed(() => {
     if (this.authService.getCurrentRole()?.toLowerCase() !== 'teacher') {
@@ -177,16 +188,16 @@ export class CourseDetailComponent {
             return;
           }
           this.notificationService.show('NOTIFICATIONS.LESSON_DELETED', 'success');
-          
+
           const c = this.course();
           if (c) {
-              this.loading.set(true);
-              this.courseService.getCourseById(c.id).subscribe((res) => {
-                  if (res.success && res.data) {
-                      this.course.set(res.data);
-                  }
-                  this.loading.set(false);
-              });
+            this.loading.set(true);
+            this.courseService.getCourseById(c.id).subscribe((res) => {
+              if (res.success && res.data) {
+                this.course.set(res.data);
+              }
+              this.loading.set(false);
+            });
           }
         },
         error: (err: HttpErrorResponse) => {
@@ -209,28 +220,42 @@ export class CourseDetailComponent {
     this.enrollModalOpen.set(true);
     this.selectedChildId.set(null);
     this.enrollError.set(null);
-    
-    if (this.enrollChildren().length === 0) {
-      this.loadingChildren.set(true);
-      this.parentService.getChildren()
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: (res) => {
-            this.loadingChildren.set(false);
-            if (res.success && res.data) {
-              this.enrollChildren.set(res.data);
-            }
-          },
-          error: () => this.loadingChildren.set(false)
-        });
-    }
+
+    this.loadingChildren.set(true);
+
+    forkJoin({
+      children: this.parentService.getChildren().pipe(map(it => it.success && it.data ? it.data : [])),
+      courses: this.parentService.getMyCourses().pipe(map(it => it.success && it.data ? it.data : []))
+    })
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe({
+      next: ({ children, courses }) => {
+        this.loadingChildren.set(false);
+        this.enrollChildren.set(children);
+        
+        const cid = this.course()?.id;
+        if (cid) {
+           const enrolledIds = courses.filter(c => c.courseId === cid).map(c => c.childId);
+           this.enrolledChildIds.set(enrolledIds);
+        }
+      },
+      error: () => this.loadingChildren.set(false)
+    });
   }
 
   closeEnrollModal(): void {
     this.enrollModalOpen.set(false);
+    this.isPaymentStep.set(false);
+    this.clientSecret.set(null);
+    this.paymentId.set(null);
+    if (this.elements) {
+      const paymentElement = this.elements.getElement('payment');
+      if (paymentElement) paymentElement.destroy();
+      this.elements = null;
+    }
   }
 
-  submitEnrollment(): void {
+  async submitEnrollment(): Promise<void> {
     const cId = this.selectedChildId();
     const c = this.course();
     if (!cId || !c) return;
@@ -238,27 +263,47 @@ export class CourseDetailComponent {
     this.enrolling.set(true);
     this.enrollError.set(null);
 
+    // If we are in the payment step, process with Stripe
+    if (this.isPaymentStep() && this.stripe && this.elements) {
+      this.processStripePayment();
+      return;
+    }
+
     if (c.price > 0) {
-      // Paid Flow
+      // Paid Flow - step 1: get client secret
       this.paymentService.createPayment({ courseId: c.id })
-        .pipe(
-          switchMap(res => {
-            if (!res.success || !res.data) throw new Error(res.message);
-            // Simulate Payment Gateway then Confirm
-            return this.paymentService.confirmPayment({
-              paymentId: res.data.paymentId,
-              childId: cId
-            });
-          }),
-          takeUntilDestroyed(this.destroyRef)
-        )
+        .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
-          next: (res) => {
+          next: async (res) => {
+            if (!res.success || !res.data) {
+              this.enrolling.set(false);
+              this.enrollError.set(res.message);
+              return;
+            }
+
+            this.clientSecret.set(res.data.clientSecret);
+            this.paymentId.set(res.data.paymentId);
+            this.isPaymentStep.set(true);
             this.enrolling.set(false);
-            this.closeEnrollModal();
-            this.notificationService.show('NOTIFICATIONS.ENROLL_SUCCESS', 'success');
+
+            // Initialize Stripe Elements
+            this.stripe = await this.stripePromise;
+            if (!this.stripe) {
+              this.enrollError.set('Failed to load Stripe.');
+              return;
+            }
+            this.elements = this.stripe.elements({
+              clientSecret: res.data.clientSecret,
+              appearance: { theme: 'stripe' }
+            });
+
+            // Need small timeout to ensure DOM is ready for mount
+            setTimeout(() => {
+              const paymentElement = this.elements!.create('payment');
+              paymentElement.mount('#payment-element');
+            }, 100);
           },
-          error: (err) => {
+          error: (err: HttpErrorResponse) => {
             this.enrolling.set(false);
             const msg = err.error?.message || err.message;
             this.enrollError.set(msg);
@@ -284,6 +329,48 @@ export class CourseDetailComponent {
             this.enrollError.set(api?.errors?.[0] ?? api?.message ?? err.message);
           }
         });
+    }
+  }
+
+  private async processStripePayment(): Promise<void> {
+    if (!this.stripe || !this.elements) return;
+
+    // confirm payment with stripe
+    const { error, paymentIntent } = await this.stripe.confirmPayment({
+      elements: this.elements,
+      redirect: 'if_required'
+    });
+
+    if (error) {
+      this.enrolling.set(false);
+      this.enrollError.set(error.message || 'Payment failed');
+      return;
+    }
+
+    if (paymentIntent && paymentIntent.status === 'succeeded') {
+      // now confirm with our backend
+      const pId = this.paymentId();
+      const cId = this.selectedChildId();
+      if (!pId || !cId) return;
+
+      this.paymentService.confirmPayment({
+        paymentId: pId,
+        childId: cId
+      }).subscribe({
+        next: () => {
+          this.enrolling.set(false);
+          this.closeEnrollModal();
+          this.notificationService.show('NOTIFICATIONS.ENROLL_SUCCESS', 'success');
+        },
+        error: (err: HttpErrorResponse) => {
+          this.enrolling.set(false);
+          const msg = err.error?.message || err.message;
+          this.enrollError.set(msg);
+        }
+      });
+    } else {
+      this.enrolling.set(false);
+      this.enrollError.set('Payment was not successful. Status: ' + paymentIntent?.status);
     }
   }
 }

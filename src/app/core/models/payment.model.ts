@@ -6,7 +6,7 @@ export interface CreatePaymentRequestDto {
 
 export interface CreatePaymentResponseDto {
   paymentId: number;
-  paymentUrl: string;
+  clientSecret: string;
 }
 
 export interface ConfirmPaymentRequestDto {

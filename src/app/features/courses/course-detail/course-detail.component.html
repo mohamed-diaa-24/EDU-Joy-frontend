@@ -197,40 +197,60 @@
           </div>
         }
 
-        @if (loadingChildren()) {
-          <div class="flex justify-center p-4">
-            <div class="h-8 w-8 animate-spin rounded-full border-4 border-emerald-200 border-t-emerald-600"></div>
-          </div>
-        } @else if (enrollChildren().length === 0) {
-          <div class="text-center py-4 bg-slate-50 rounded-2xl mb-4 border border-dashed border-slate-200">
-            <p class="text-slate-500">{{ 'PARENT.NO_CHILDREN' | translate }}</p>
-            <a routerLink="/parent-dashboard" class="mt-2 text-emerald-600 font-bold hover:underline inline-block">
-              {{ 'PARENT.ADD_CHILD_NOW' | translate }}
-            </a>
+        @if (isPaymentStep()) {
+          <div class="mb-6">
+            <h4 class="font-bold text-slate-800 mb-4">{{ 'COURSES.PAYMENT_DETAILS' | translate }}</h4>
+            <div id="payment-element" class="min-h-[200px] w-full bg-slate-50 p-4 rounded-2xl border border-slate-200">
+              <!-- Stripe Elements are inserted here -->
+            </div>
           </div>
         } @else {
-          <div class="flex flex-col gap-3 mb-6">
-            @for (child of enrollChildren(); track child.id) {
-              <label 
-                class="flex items-center gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all hover:bg-slate-50"
-                [class.border-emerald-500]="selectedChildId() === child.id"
-                [class.bg-emerald-50]="selectedChildId() === child.id"
-                [class.border-slate-100]="selectedChildId() !== child.id"
-                (click)="selectedChildId.set(child.id)"
-              >
+          @if (loadingChildren()) {
+            <div class="flex justify-center p-4">
+              <div class="h-8 w-8 animate-spin rounded-full border-4 border-emerald-200 border-t-emerald-600"></div>
+            </div>
+          } @else if (enrollChildren().length === 0) {
+            <div class="text-center py-4 bg-slate-50 rounded-2xl mb-4 border border-dashed border-slate-200">
+              <p class="text-slate-500">{{ 'PARENT.NO_CHILDREN' | translate }}</p>
+              <a routerLink="/parent-dashboard" class="mt-2 text-emerald-600 font-bold hover:underline inline-block">
+                {{ 'PARENT.ADD_CHILD_NOW' | translate }}
+              </a>
+            </div>
+          } @else {
+            <div class="flex flex-col gap-3 mb-6">
+              @for (child of enrollChildren(); track child.id) {
                 <div 
-                  class="w-5 h-5 rounded-full border-2 flex items-center justify-center"
+                  class="flex items-center justify-between p-4 rounded-2xl border-2 transition-all"
+                  [class.cursor-pointer]="!enrolledChildIds().includes(child.id)"
+                  [class.hover:bg-slate-50]="!enrolledChildIds().includes(child.id)"
+                  [class.cursor-not-allowed]="enrolledChildIds().includes(child.id)"
+                  [class.opacity-60]="enrolledChildIds().includes(child.id)"
                   [class.border-emerald-500]="selectedChildId() === child.id"
-                  [class.border-slate-300]="selectedChildId() !== child.id"
+                  [class.bg-emerald-50]="selectedChildId() === child.id"
+                  [class.border-slate-100]="selectedChildId() !== child.id"
+                  (click)="!enrolledChildIds().includes(child.id) && selectedChildId.set(child.id)"
                 >
-                  @if (selectedChildId() === child.id) {
-                    <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
+                  <div class="flex items-center gap-3">
+                    <div 
+                      class="w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0"
+                      [class.border-emerald-500]="selectedChildId() === child.id"
+                      [class.border-slate-300]="selectedChildId() !== child.id"
+                    >
+                      @if (selectedChildId() === child.id) {
+                        <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
+                      }
+                    </div>
+                    <span class="font-bold text-slate-800">{{ child.name }}</span>
+                  </div>
+                  @if (enrolledChildIds().includes(child.id)) {
+                    <span class="text-xs font-bold text-rose-500 bg-rose-50 px-2 py-1 rounded-lg">
+                      {{ 'COURSES.ALREADY_ENROLLED' | translate }}
+                    </span>
                   }
                 </div>
-                <span class="font-bold text-slate-800">{{ child.name }}</span>
-              </label>
-            }
-          </div>
+              }
+            </div>
+          }
         }
 
         <div class="mt-4 flex gap-3">
@@ -242,6 +262,8 @@
           >
             @if (enrolling()) {
               {{ 'COMMON.SAVING' | translate }}
+            } @else if (isPaymentStep()) {
+              {{ 'COURSES.CONFIRM_PAYMENT' | translate }}
             } @else {
               @if (course()?.price! > 0) {
                 {{ 'COURSES.PAY_AND_ENROLL' | translate }}
