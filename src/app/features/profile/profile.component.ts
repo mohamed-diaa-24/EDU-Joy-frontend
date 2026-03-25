@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, DestroyRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
@@ -16,6 +16,7 @@ import { AuthService } from '../../core/services/auth.service';
 export class ProfileComponent {
   private readonly formBuilder = inject(FormBuilder);
   readonly authService = inject(AuthService);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly loadingProfile = signal(false);
   readonly submitError = signal<string | null>(null);
@@ -38,7 +39,7 @@ export class ProfileComponent {
     if (this.isChild()) {
       this.authService
         .getChildProfile()
-        .pipe(takeUntilDestroyed())
+        .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: (response: ApiResponse<ChildProfileResponse>) => {
             if (!response.success || !response.data) {
@@ -61,7 +62,7 @@ export class ProfileComponent {
 
     this.authService
       .getProfile()
-      .pipe(takeUntilDestroyed())
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (response: ApiResponse<UserProfileResponse>) => {
           if (!response.success || !response.data) {
@@ -94,7 +95,7 @@ export class ProfileComponent {
     if (this.isChild()) {
       this.authService
         .updateChildProfile({ name: payloadValue })
-        .pipe(takeUntilDestroyed())
+        .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: (response: ApiResponse<ChildProfileResponse>) => {
             if (!response.success) {
@@ -116,7 +117,7 @@ export class ProfileComponent {
 
     this.authService
       .updateProfile({ fullName: payloadValue })
-      .pipe(takeUntilDestroyed())
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (response: ApiResponse<UserProfileResponse>) => {
           if (!response.success) {

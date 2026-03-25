@@ -265,7 +265,8 @@
     "OPTION_2": "الخيار الثاني",
     "OPTION_3": "الخيار الثالث",
     "CORRECT_OPTION": "الخيار الصحيح",
-    "VIDEO_REQUIRED_FILE": "يرجى تحديد ملف فيديو."
+    "VIDEO_REQUIRED_FILE": "يرجى تحديد ملف فيديو.",
+    "FORM_VIDEO_FILE": "ملف فيديو الدرس"
   },
   "CHILD": {
     "MY_COURSES_BADGE": "مساحتي التعليمية",

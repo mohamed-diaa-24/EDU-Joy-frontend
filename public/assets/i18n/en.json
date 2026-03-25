@@ -31,7 +31,7 @@
     "SAVE": "Save",
     "CANCEL": "Cancel",
     "CONFIRM_ACTION": "Confirm",
-    "SAVING" :"Saving..."
+    "SAVING": "Saving..."
   },
   "LANDING": {
     "HERO": {
@@ -265,7 +265,8 @@
     "OPTION_2": "Option 2",
     "OPTION_3": "Option 3",
     "CORRECT_OPTION": "Correct Option",
-    "VIDEO_REQUIRED_FILE": "Please select a video file."
+    "VIDEO_REQUIRED_FILE": "Please select a video file.",
+    "FORM_VIDEO_FILE": "Lesson Video File"
   },
   "CHILD": {
     "MY_COURSES_BADGE": "My Learning",
