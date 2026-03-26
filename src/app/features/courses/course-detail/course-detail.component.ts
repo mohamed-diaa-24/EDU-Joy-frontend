@@ -15,10 +15,9 @@ import { CourseService } from '../../../core/services/course.service';
 import { LessonService } from '../../../core/services/lesson.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { ConfirmDialogComponent } from '../../../shared/ui/confirm-dialog/confirm-dialog.component';
-import { ParentService } from '../../../core/services/parent.service';
-import { PaymentService } from '../../../core/services/payment.service';
-import { EnrollmentService } from '../../../core/services/enrollment.service';
+import { CourseEnrollmentFacade } from '../../../core/services/course-enrollment.facade';
 import { ChildDto } from '../../../core/models/parent.model';
+
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -36,9 +35,7 @@ export class CourseDetailComponent {
   private readonly authService = inject(AuthService);
   private readonly notificationService = inject(NotificationService);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly parentService = inject(ParentService);
-  private readonly paymentService = inject(PaymentService);
-  private readonly enrollmentService = inject(EnrollmentService);
+  private readonly courseEnrollmentFacade = inject(CourseEnrollmentFacade);
 
   readonly loading = signal(true);
   readonly error = signal<string | null>(null);
@@ -223,24 +220,19 @@ export class CourseDetailComponent {
 
     this.loadingChildren.set(true);
 
-    forkJoin({
-      children: this.parentService.getChildren().pipe(map(it => it.success && it.data ? it.data : [])),
-      courses: this.parentService.getMyCourses().pipe(map(it => it.success && it.data ? it.data : []))
-    })
-    .pipe(takeUntilDestroyed(this.destroyRef))
-    .subscribe({
-      next: ({ children, courses }) => {
-        this.loadingChildren.set(false);
-        this.enrollChildren.set(children);
-        
-        const cid = this.course()?.id;
-        if (cid) {
-           const enrolledIds = courses.filter(c => c.courseId === cid).map(c => c.childId);
-           this.enrolledChildIds.set(enrolledIds);
-        }
-      },
-      error: () => this.loadingChildren.set(false)
-    });
+    const cid = this.course()?.id;
+    if (!cid) return;
+
+    this.courseEnrollmentFacade.getEnrollmentData(cid)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: ({ children, enrolledChildIds }) => {
+          this.loadingChildren.set(false);
+          this.enrollChildren.set(children);
+          this.enrolledChildIds.set(enrolledChildIds);
+        },
+        error: () => this.loadingChildren.set(false)
+      });
   }
 
   closeEnrollModal(): void {
@@ -271,7 +263,7 @@ export class CourseDetailComponent {
 
     if (c.price > 0) {
       // Paid Flow - step 1: get client secret
-      this.paymentService.createPayment({ courseId: c.id })
+      this.courseEnrollmentFacade.initiatePaidEnrollment(c.id)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: async (res) => {
@@ -311,7 +303,7 @@ export class CourseDetailComponent {
         });
     } else {
       // Free Flow
-      this.enrollmentService.enroll({ childId: cId, courseId: c.id })
+      this.courseEnrollmentFacade.processFreeEnrollment(cId, c.id)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: (res) => {
@@ -353,10 +345,8 @@ export class CourseDetailComponent {
       const cId = this.selectedChildId();
       if (!pId || !cId) return;
 
-      this.paymentService.confirmPayment({
-        paymentId: pId,
-        childId: cId
-      }).subscribe({
+      this.courseEnrollmentFacade.confirmPaidEnrollment(pId, cId)
+        .subscribe({
         next: () => {
           this.enrolling.set(false);
           this.closeEnrollModal();
