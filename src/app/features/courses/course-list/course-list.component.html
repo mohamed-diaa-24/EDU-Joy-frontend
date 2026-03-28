@@ -183,6 +183,7 @@
                     @if (course.price <= 0) {
                       {{ 'COURSES.FREE' | translate }}
                     } @else {
+                      <span class="text-xs font-bold">$</span>
                       {{ course.price | number: '1.2-2' }}
                     }
                   </span>
