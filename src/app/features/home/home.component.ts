@@ -8,5 +8,6 @@ import { TranslateModule } from '@ngx-translate/core';
   standalone: true,
   imports: [CommonModule, TranslateModule, RouterLink],
   templateUrl: './home.component.html',
+  styleUrls:['./home.component.scss']
 })
 export class HomeComponent {}
